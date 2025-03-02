@@ -5,9 +5,6 @@ import time
 import json
 import os
 
-
-# ------ FUNCTIONS ------ #
-
 # ------ USER DATA FUNCTIONS ------ #
 
 # note: this is so complicated bro 
@@ -51,10 +48,26 @@ def addNewUser(username, password): # adds a new user to the system
             "losses": 0,
             "draws": 0,
             "vsBot": {
-                "easy": {"wins": 0, "losses": 0, "draws": 0},
-                "medium": {"wins": 0, "losses": 0, "draws": 0},
-                "hard": {"wins": 0, "losses": 0, "draws": 0},
-                "expert": {"wins": 0, "losses": 0, "draws": 0}
+                "easy": {
+                    "wins": 0, 
+                    "losses": 0, 
+                    "draws": 0
+                },
+                "medium": {
+                    "wins": 0, 
+                    "losses": 0, 
+                    "draws": 0
+                },
+                "hard": {
+                    "wins": 0, 
+                    "losses": 0, 
+                    "draws": 0
+                },
+                "expert": {
+                    "wins": 0, 
+                    "losses": 0, 
+                    "draws": 0
+                }
             },
             "vsPlayer": {
                 "wins": 0,
@@ -99,17 +112,6 @@ def viewUserStats(username): # displays user statistics
     print("=================================\n")
     return True
 
-def getDifficultyString(difficulty): # needed to convert difficulty to string for stat storage as its stored as int not string
-    if difficulty == -2:
-        return "easy"
-    elif difficulty == -1:
-        return "medium"
-    elif difficulty == 0:
-        return "hard"
-    elif difficulty == 1:
-        return "expert"
-    return "hard"  # default fallback
-
 def login(): # login function where u enter username and password and it checks if it exists and if it does it checks if the password is correct then returns username 
     username = input("Username: ") # gets username
     password = input("Password: ") # gets password
@@ -127,13 +129,46 @@ def login(): # login function where u enter username and password and it checks 
         login()  # Try again by calling login again
 
 def createAccount(): # creates an account
+    userData = loadUsers() # loads user data
     username = input('Username: ') # gets username
     if username in userData['users']: # checks if username already exists
         print('Username already exists!\nTry a different username.') 
         createAccount() # recursively calls createAccount function to try again
-    while password not len(password) >= 12 and any(character.isdigit() for character in password) and any(character.isupper() for character in password) and any(character.islower() for character in password) and any(character in '!#$%&()*+,-./:;<=>?@[\]^_`{|}~'): # checks if password matches requirementskikiki
+    while not (len(password) >= 12 and any(character.isdigit() for character in password) and any(character.isupper() for character in password) and any(character.islower() for character in password) and any(character in '!#$%&()*+,-./:;<=>?@[\]^_`{|}~')): # checks if password matches requirements
+        password = input('Password: ') # gets password
+    addNewUser(username, password) # adds new user to userData
+
+def guest(): # defines guest function that allows u to play as guest
+    guestMode = True # sets guest mode to true
+    print('Guest mode enabled!') # prints guest mode enabled message
+    menuHandler(guestMode) # calls menuHandler function with guestMode as choice variable
 
 # ------ GAME FUNCTIONS ------ #
+
+def getDifficultyString(difficulty): # needed to convert difficulty to string for stat storage as its stored as int not string
+    if difficulty == -2:
+        return "easy"
+    elif difficulty == -1:
+        return "medium"
+    elif difficulty == 0:
+        return "hard"
+    elif difficulty == 1:
+        return "expert"
+    return "hard"  # default fallback
+
+
+def homeScreen(): # defines homeScreen function that prints home screen for loging in or creating an account
+    print('========================') # prints welcome message
+    print('Welcome to Amazing Dice!') # prints welcome message
+    print('========================') # prints welcome message
+    choice = menu('home') # calls menu function with home as choice variable
+    if choice == 1: # if u pick login
+        login() # calls login function
+    elif choice == 2: # if u pick create account
+        createAccount() # calls createAccount function
+    elif choice == 3: # if u pick guest
+        guest() # calls guest function
+
 
 def playRound(difficulty, choice, scores): # defines playRound function that handles a single round
     rollTotal1, rollTotal2 = diceRoll(6, difficulty, choice) # rolls dice for both players
@@ -176,6 +211,9 @@ def menu(choice): # prints menu and returns what u pick (tree style)
         return int(input('--- START ---\n1) Bot\n2) Person\n\n')) # returns what u pick
     elif choice == 'bot': # prints bot menu if u pick bot
         return int(input('--- DIFFICULTY ---\n1) Easy\n2) Medium\n3) Hard\n4) Expert\n\n')) # returns what u pick
+    elif choice == 'home': # prints home menu if u pick home
+        return int(input('\n\n1) Login\n2) Create account\n3) Guest\n\n')) # returns what u pick
+    
 
 def match(choice, difficulty, username):  # add username parameter
 
@@ -225,11 +263,12 @@ def match(choice, difficulty, username):  # add username parameter
             time.sleep(0.25) # slow down animation
         match(choice, difficulty, username) # recursive call to match function to play again if tie
 
-def menuHandler(): # defines menuHandler function that deals with the menu
+def menuHandler(guestMode): # defines menuHandler function that deals with the menu
     choice = menu('menu') # show main menu
-    if choice == 1: # user chose to view stats
-        print("\nStats system coming soon!") # ADD STATS SYSTEM HERE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        time.sleep(2)
+    if choice == 1 and not guestMode: # user chose to view stats and is not guest
+        viewUserStats(username) # use viewUserStats function to view stats
+    elif choice == 1 and guestMode: # user chose to view stats and is guest
+        print('Guest mode does not have stats!\nSign in for more features!') # prints guest mode does not have stats message
     elif choice == 2: # user chose to start match
         choice = menu('match') # show match menu
         if choice == 1: # user chose to play with bot
@@ -252,10 +291,11 @@ def menuHandler(): # defines menuHandler function that deals with the menu
         time.sleep(1) # waits 1 second before closing
         # SIGN OUT WHEN I MADE THE SIGN IN SYSTEM !!!!!!!!!!!!!!!!!!!!!!!!!!
 
-if __name__ == '__main__': # runs menuHandler if the file is run directly (not imported like with login system)
-    menuHandler() # runs menuHandler
+
 
 # ------ MAIN ------ #
+
+homeScreen() # runs homeScreen function for first time users
 
 # ONLINE:??????????????
 
