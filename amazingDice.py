@@ -5,6 +5,14 @@ import time
 import json
 import os
 
+# ------ GLOBAL VARIABLES ------ #
+
+width = 40  # width for cool centering
+# ------ FILE STUFF ------ #
+
+os.chdir(os.path.dirname(os.path.abspath(__file__))) # Change to the script's directory when starting
+# ^^^^ so much stupid things i dont like file management
+
 # ------ USER DATA FUNCTIONS ------ #
 
 # note: this is so complicated bro 
@@ -12,6 +20,7 @@ import os
 def loadUsers(): #loads user data from json file
     try:
         with open('userLoginInfo.json', 'r') as file: # opens userLoginInfo.json file
+            #print('User data loaded successfully!') # prints user data loaded successfully message for debugging
             return json.load(file) # returns user data as a dictionary
     except FileNotFoundError: # handles case where file doesn't exist
         print("Warning: User data file not found! Creating temporary user structure...")
@@ -27,7 +36,7 @@ def saveUsers(data): # saves user data to json file
     try:
         with open('userLoginInfo.json', 'w') as file:  # try to open file in write mode
             json.dump(data, file, indent=4)  # try to write the data to the file
-            print("User data saved successfully!")  # only prints if both operations succeed
+            #print("User data saved successfully!")  # only prints if both operations succeed (for debugging)
     except PermissionError:  # if we can't write to the file (no permissions)
         print("Error: Cannot save user data! Check file permissions.")
 
@@ -78,48 +87,51 @@ def addNewUser(username, password): # adds a new user to the system
     }
     
     saveUsers(data)  # save the updated data
-    print(f"User {username} created successfully!")
+    print(f"\nUser {username} created successfully!\n")
     return True
 
 def viewUserStats(username): # displays user statistics
     data = loadUsers() # load user data
     
     if username not in data['users']: # check if user exists
-        print("User not found!") # prints error if user doesn't exist
+        print("User not found!".center(width)) # prints error if user doesn't exist
         return False
     
     stats = data['users'][username]['stats'] # get user's stats
     
-    # Display stats in a nice format
-    print("\n=================================")
-    print(f"     {username}'s Stats")
-    print("=================================")
-    print(f"Total Games: {stats['totalGames']}")
-    print(f"Overall: {stats['wins']} Wins, {stats['losses']} Losses, {stats['draws']} Draws")
+    # Display stats in a nice format with .center
+    print(f"{'='*width}\n{'{username}\'s Stats'.center(width)}\n{'='*width}\n")
+    print(f"Total Games: {stats['totalGames']}".center(width))
+    print(f"Overall: {stats['wins']} Wins, {stats['losses']} Losses, {stats['draws']} Draws".center(width))
     
     # Bot stats with each difficulty
-    print("\nBot Games:")
-    print("------------------")
+    print("\n" + "Bot Games".center(width))
+    print("="*width)
     for difficulty in ['easy', 'medium', 'hard', 'expert']: # for each difficulty
         botStats = stats['vsBot'][difficulty] # gets bot stats for each difficulty
-        print(f"{difficulty.capitalize()}: {botStats['wins']} Wins, {botStats['losses']} Losses, {botStats['draws']} Draws") # prints bot stats for each difficulty using capitalize to make it look nice 
+        print(f"{difficulty.capitalize()}: {botStats['wins']} Wins, {botStats['losses']} Losses, {botStats['draws']} Draws".center(width))
     
     # Player vs Player stats
-    print("\nVs Player:")
-    print("------------------")
+    print("\n" + "Vs Player".center(width))
+    print("="*width)
     playerStats = stats['vsPlayer'] # gets player stats
-    print(f"Wins: {playerStats['wins']}, Losses: {playerStats['losses']}, Draws: {playerStats['draws']}") # prints player stats
-    print("=================================\n")
+    print(f"Wins: {playerStats['wins']}, Losses: {playerStats['losses']}, Draws: {playerStats['draws']}".center(width))
+    print("="*width + "\n")
     return True
 
 def login(): # login function where u enter username and password and it checks if it exists and if it does it checks if the password is correct then returns username 
+    os.system('cls')
+    print(f"\n{'='*width}\n{'LOGIN'.center(width)}\n{'='*width}\n")
     username = input("Username: ") # gets username
     password = input("Password: ") # gets password
     userData = loadUsers() # loads user data
     
     if username in userData['users']: # checks if username exists
         if userData['users'][username]['password'] == password: # checks if password is correct
-            print(f"\nWelcome back, {username}!") # prints welcome back message
+            os.system('cls') # clears terminal
+            print(f"Welcome back, {username}!") # prints welcome back message
+            time.sleep(1)
+            os.system('cls')
             return username # returns username
         else: # if password is incorrect
             print("Incorrect password!") # prints incorrect password message
@@ -134,14 +146,17 @@ def createAccount(): # creates an account
     if username in userData['users']: # checks if username already exists
         print('Username already exists!\nTry a different username.') 
         createAccount() # recursively calls createAccount function to try again
-    while not (len(password) >= 12 and any(character.isdigit() for character in password) and any(character.isupper() for character in password) and any(character.islower() for character in password) and any(character in '!#$%&()*+,-./:;<=>?@[\]^_`{|}~')): # checks if password matches requirements
+    password = input('Password: ') # gets initial password
+    while not (len(password) >= 12 and 
+              any(c.isdigit() for c in password) and 
+              any(c.isupper() for c in password) and 
+              any(c.islower() for c in password) and 
+              any(c in r'!#$%&()*+,-./:;<=>?@[]^_`{|}~\'"' for c in password)): # checks if password matches requirements
+        print("Password must be at least 12 characters and contain uppercase, lowercase, numbers, and special characters.")
         password = input('Password: ') # gets password
-    addNewUser(username, password) # adds new user to userData
-
-def guest(): # defines guest function that allows u to play as guest
-    guestMode = True # sets guest mode to true
-    print('Guest mode enabled!') # prints guest mode enabled message
-    menuHandler(guestMode) # calls menuHandler function with guestMode as choice variable
+    if addNewUser(username, password): # adds new user to userData (if checks if successful)
+        print(f"Account created successfully! Welcome, {username}!") # prints success message
+        return username # returns username
 
 # ------ GAME FUNCTIONS ------ #
 
@@ -156,22 +171,23 @@ def getDifficultyString(difficulty): # needed to convert difficulty to string fo
         return "expert"
     return "hard"  # default fallback
 
-
 def homeScreen(): # defines homeScreen function that prints home screen for loging in or creating an account
-    print('========================') # prints welcome message
-    print('Welcome to Amazing Dice!') # prints welcome message
-    print('========================') # prints welcome message
-    choice = menu('home') # calls menu function with home as choice variable
+    print(f"{'='*width}\n{'Welcome to Amazing Dice!'.center(width)}\n{'='*width}\n".center(width))
+    time.sleep(2) # show welcome message for 2 seconds
+    os.system('cls') # clear screen in prep for home screen
+    choice = menu('home', None, None) # calls menu function with home as choice variable
     if choice == 1: # if u pick login
-        login() # calls login function
+        menuHandler(False, login()) # calls menuHandler function with False as guestMode variable and username as username variable returned by login function
     elif choice == 2: # if u pick create account
-        createAccount() # calls createAccount function
+        menuHandler(False, createAccount()) # calls menuHandler function with False as guestMode variable and username as username variable returned by createAccount function
     elif choice == 3: # if u pick guest
-        guest() # calls guest function
+        print(f'{"="*width}\n{"Guest mode enabled!".center(width)}\n{"="*width}\n') # prints guest mode enabled message
+        time.sleep(1)
+        os.system('cls')
+        menuHandler(True, None) # calls menuHandler function with True as guestMode variable and None as username variable
 
-
-def playRound(difficulty, choice, scores): # defines playRound function that handles a single round
-    rollTotal1, rollTotal2 = diceRoll(6, difficulty, choice) # rolls dice for both players
+def playRound(difficulty, choice, scores, fastRoll): # defines playRound function that handles a single round
+    rollTotal1, rollTotal2 = diceRoll(6, difficulty, choice, fastRoll) # rolls dice for both players
     print(f"\nYour total roll: {rollTotal2}") # prints your total roll
     print(f"{'Bot' if choice == 'bot' else 'Player 1'}'s total roll: {rollTotal1}") # prints bot's total roll
     if rollTotal1 > rollTotal2: # checks if first player has largest roll total
@@ -181,120 +197,167 @@ def playRound(difficulty, choice, scores): # defines playRound function that han
         scores['player2'] += 1 # adds 1 to player2's score
         print("You win this round!") # prints you win this round
     else: # if draw
-        print("Draw! Rolling again...") # prints draw
+        print("Draw! Rolling again...\n") # prints draw
         time.sleep(0.5) # wait before reroll
-        playRound(difficulty, choice, scores) # recursively play the round again
+        playRound(difficulty, choice, scores, fastRoll) # recursively play the round again
 
-def diceRoll(size, difficulty, choice): # defines diceRoll function using the size of the dice, bot difficulty, and choice of player (bot or person)
+def diceRoll(size, difficulty, choice, fastRoll): # defines diceRoll function using the size of the dice, bot difficulty, and choice of player (bot or person)
     rollTotal1, rollTotal2 = 0, 0 # initialize rolls to 0
     for i in range(3): # rolls dice 3 times
         for x in range(4): # cool '...' animation
             print(f'Rolling{"." * x}', end='\r') # prints rolling with \r to overwrite the line
-            time.sleep(0.25) # slow down animation
+            time.sleep(0.25) if fastRoll == 'n' else time.sleep(0.05) # slow down animation if fastRoll is not 'y' else faster animation
         roll1 = random.randint(1, size) # get current roll for player 1/bot
         roll2 = random.randint(1, size) # get current roll for player 2
         rollTotal1 += (roll1 + difficulty) if roll1 + difficulty > 0 else 0 # adds random roll to roll1 total for player 1/bot and take into account difficulty and will ignore negative rolls
-        print(f"{'Bot' if choice == 'bot' else 'Player 1'} rolled: {roll1 + difficulty if roll1 + difficulty > 0 else 0} {'(' if difficulty != 0 else ''}{roll1 if difficulty != 0 else ''} {'-' if difficulty < 0 else '+' if difficulty > 0 else ''}{' ' if difficulty != 0 else ''}{abs(difficulty) if difficulty != 0 else ''} {'=' if difficulty != 0 else ''} {roll1 + difficulty if difficulty != 0 else ''}{')' if difficulty != 0 else ''}") # prints player 2s score and change from difficulty if necessary
+        print(f"\nRoll {i + 1}: \n{'Bot' if choice == 'bot' else 'Player 1'} rolled: {roll1 + difficulty if roll1 + difficulty > 0 else 0} {'(' if difficulty != 0 else ''}{roll1 if difficulty != 0 else ''} {'-' if difficulty < 0 else '+' if difficulty > 0 else ''}{' ' if difficulty != 0 else ''}{abs(difficulty) if difficulty != 0 else ''} {'=' if difficulty != 0 else ''} {roll1 + difficulty if difficulty != 0 else ''}{')' if difficulty != 0 else ''}") # prints player 2s score and change from difficulty if necessary
         rollTotal2 += roll2 # adds random roll to roll total for player 2
+        time.sleep(0.25) if fastRoll == 'n' else time.sleep(0.05) # slow down animation if fastRoll is not 'y' else faster animation
         print(f"You rolled: {roll2}")
-        print(f"Roll {i+1}: {roll2} vs {rollTotal1}") # show individual rolls
-        time.sleep(0.5) # wait between rolls
+        time.sleep(0.25) if fastRoll == 'n' else time.sleep(0.05) # slow down animation if fastRoll is not 'y' else faster animation
+        print(f"\n{roll2} vs {rollTotal1}\n") # show individual rolls
+        time.sleep(0.5) if fastRoll == 'n' else time.sleep(0.05) # slow down animation if fastRoll is not 'y' else faster animation
     
     time.sleep(0.75) # pause before showing totals
-    print(f"\nTotal rolls: {rollTotal2} vs {rollTotal1}") # show final totals
     return rollTotal1, rollTotal2 # returns total of 3 rolls for each player
 
-def menu(choice): # prints menu and returns what u pick (tree style)
+def menu(choice, guestMode, username): # prints menu and returns what u pick (tree style)
     if choice == 'menu': # prints menu if u pick menu
-        return int(input('--- MENU ---\n1) View stats\n2) Start match \n3) Sign out\n\n')) # returns what u pick
+        choice = int(input(f'{"=" * width}            (Signed in as: {username if not guestMode else "Guest"})\n{"MENU".center(width)}\n{"=" * width}\n1) View stats\n2) Start match \n3) Sign out\n\n')) # returns what u pick
+        os.system('cls') # clears terminal
+        return choice
     elif choice == 'match': # prints match menu if u pick match
-        return int(input('--- START ---\n1) Bot\n2) Person\n\n')) # returns what u pick
+        choice = int(input(f'{"=" * width}\n{"START".center(width)}\n{"=" * width}\n1) Bot\n2) Person\n\n')) # returns what u pick
+        os.system('cls') # clears terminal
+        return choice
     elif choice == 'bot': # prints bot menu if u pick bot
-        return int(input('--- DIFFICULTY ---\n1) Easy\n2) Medium\n3) Hard\n4) Expert\n\n')) # returns what u pick
+        choice = int(input(f'{"=" * width}\n{"DIFFICULTY".center(width)}\n{"=" * width}\n1) Easy\n2) Medium\n3) Hard\n4) Expert\n\n')) # returns what u pick
+        os.system('cls') # clears terminal
+        return choice
     elif choice == 'home': # prints home menu if u pick home
-        return int(input('\n\n1) Login\n2) Create account\n3) Guest\n\n')) # returns what u pick
-    
+        choice = int(input(f'\n{"=" * width}\n{"HOME".center(width)}\n{"=" * width}\n\n1) Login\n2) Create account\n3) Guest\n\n')) # returns what u pick
+        os.system('cls') # clears terminal
+        return choice
 
-def match(choice, difficulty, username):  # add username parameter
+def match(choice, difficulty, username, guestMode):  # add username parameter
 
     scores = {'player1': 0, 'player2': 0} # creates scores dict
 
+    fastRoll = input('Fast roll? (y/n): ').lower()
+
     for i in range(5): # runs 5 rounds
-        print(f"\nRound {i+1}") # prints round number
-        playRound(difficulty, choice, scores) # plays a round
+        time.sleep(0.25)
+        print(f"\nRound {i+1}\n".center(width)) # prints round number
+        time.sleep(0.25)
+        playRound(difficulty, choice, scores, fastRoll) # plays a round
     
     time.sleep(0.75) # pause before showing final scores
 
-    print("\nFinal Scores:")
-    print("--------------------------------")
-    print(f"         You: {scores['player2']} points!")
-    print(f"         {'Bot' if choice == 'bot' else 'Player 1'}: {scores['player1']} points!")
-    print("--------------------------------")
+    print("\n" + "Final Scores:".center(width))
+    time.sleep(0.25)
+    print("="*width)
+    time.sleep(0.25)
+    print(f"You: {scores['player2']} points!".center(width))
+    time.sleep(0.25)
+    print(f"{'Bot' if choice == 'bot' else 'Player 1'}: {scores['player1']} points!".center(width))
+    time.sleep(0.25)
+    print("="*width)
 
     time.sleep(0.5) # pause before showing winner
 
     if scores['player1'] > scores['player2']:
         print(f"\n{'Bot' if choice == 'bot' else 'Player 1'} wins the game!\n")
-        userData = loadUsers()
-        userData['users'][username]['stats']['totalGames'] += 1
-        userData['users'][username]['stats']['losses'] += 1
-        if choice == 'bot':
-            difficultyString = getDifficultyString(difficulty)
-            userData['users'][username]['stats']['vsBot'][difficultyString]['losses'] += 1
-        else:
-            userData['users'][username]['stats']['vsPlayer']['losses'] += 1
-        saveUsers(userData)
+        if not guestMode:  # Only update stats if not in guest mode
+            userData = loadUsers()
+            userData['users'][username]['stats']['totalGames'] += 1
+            userData['users'][username]['stats']['losses'] += 1
+            if choice == 'bot':
+                difficultyString = getDifficultyString(difficulty)
+                userData['users'][username]['stats']['vsBot'][difficultyString]['losses'] += 1
+            else:
+                userData['users'][username]['stats']['vsPlayer']['losses'] += 1
+            saveUsers(userData)
     elif scores['player1'] < scores['player2']:
-        print("\nYou win the game!\n")
-        userData = loadUsers()
-        userData['users'][username]['stats']['totalGames'] += 1
-        userData['users'][username]['stats']['wins'] += 1
-        if choice == 'bot':
-            difficultyString = getDifficultyString(difficulty)
-            userData['users'][username]['stats']['vsBot'][difficultyString]['wins'] += 1
-        else:
-            userData['users'][username]['stats']['vsPlayer']['wins'] += 1
-        saveUsers(userData)
-
+        print("\nYou win the game!\n".center(width))
+        print("              .-=========-.")  # trophy ascii art
+        print("              \\'-=======-'/")
+        print("              _|   .=.   |_")
+        print("             ((|  {{1}}  |))")
+        print("              \\|   /|\\   |/")
+        print("               \\__ '`' __/")
+        print("                 _`) (`_")
+        print("               _/_______\\_")
+        print("              /___________\\\n")
+        
+        if not guestMode:  # Only update stats if not in guest mode
+            userData = loadUsers()
+            userData['users'][username]['stats']['totalGames'] += 1
+            userData['users'][username]['stats']['wins'] += 1
+            if choice == 'bot':
+                difficultyString = getDifficultyString(difficulty)
+                userData['users'][username]['stats']['vsBot'][difficultyString]['wins'] += 1
+            else:
+                userData['users'][username]['stats']['vsPlayer']['wins'] += 1
+            saveUsers(userData)
+        input('Press Enter to return to menu... ')
+        os.system('cls')
+        menuHandler(guestMode, username)
     else:
-        print("\nIt's a tie!")
+        print("\nIt's a tie!") # wont happen bc 5 rounds and tie is impossible
+        if not guestMode:  # Only update stats if not in guest mode
+            userData = loadUsers()
+            userData['users'][username]['stats']['totalGames'] += 1 # adds 1 to total games (maybe shouldnt be here but idk bc it will add 1 to total games for every tie but its the same match just rerolled)
+            userData['users'][username]['stats']['draws'] += 1 # adds 1 to draws
+            saveUsers(userData)
         for x in range(4): # cool '...' animation
             print(f'Restarting match{"." * x}', end='\r') # prints rolling with \r to overwrite the line
             time.sleep(0.25) # slow down animation
-        match(choice, difficulty, username) # recursive call to match function to play again if tie
+        match(choice, difficulty, username, guestMode) # recursive call to match function to play again if tie
 
-def menuHandler(guestMode): # defines menuHandler function that deals with the menu
-    choice = menu('menu') # show main menu
+def menuHandler(guestMode, username): # defines menuHandler function that deals with the menu
+    choice = menu('menu', guestMode, username) # show main menu
     if choice == 1 and not guestMode: # user chose to view stats and is not guest
-        viewUserStats(username) # use viewUserStats function to view stats
+        if viewUserStats(username): # use viewUserStats function to view stats
+            input('Press Enter to return to menu... ')
+            os.system('cls') # clears screen
+            menuHandler(guestMode, username) # recursive call to menuHandler function to return to menu
     elif choice == 1 and guestMode: # user chose to view stats and is guest
-        print('Guest mode does not have stats!\nSign in for more features!') # prints guest mode does not have stats message
+        print('Guest mode does not have stats!\nSign in for more features!'.center(width)) # prints guest mode does not have stats message
+        time.sleep(2)
+        os.system('cls')
+        menuHandler(guestMode, username)
     elif choice == 2: # user chose to start match
-        choice = menu('match') # show match menu
+        choice = menu('match', guestMode, username) # show match menu
         if choice == 1: # user chose to play with bot
-            choice = menu('bot') # show bot menu
+            choice = menu('bot', guestMode, username) # show bot menu
             if choice == 1: # user chose easy
-                match('bot', -2, username) # use match function to start match with bot and difficulty (-2 is point reduction)
+                match('bot', -2, username, guestMode) # use match function to start match with bot and difficulty (-2 is point reduction)
             elif choice == 2: # user chose medium
-                match('bot', -1, username) # use match function to start match with bot and difficulty (-1 is point reduction)
+                match('bot', -1, username, guestMode) # use match function to start match with bot and difficulty (-1 is point reduction)
             elif choice == 3: # user chose hard
-                match('bot', 0, username) # use match function to start match with bot and difficulty (0 is no point reduction)
+                match('bot', 0, username, guestMode) # use match function to start match with bot and difficulty (0 is no point reduction)
             elif choice == 4: # user chose expert
-                match('bot', 1, username) # use match function to start match with bot and difficulty (1 is point increase)
+                match('bot', 1, username, guestMode) # use match function to start match with bot and difficulty (1 is point increase)
         elif choice == 2: # user chose to play with other player
-            match('person', 0, username) # use match function to start match with other player with no point reduction
+            match('person', 0, username, guestMode) # use match function to start match with other player with no point reduction
     elif choice == 3: # user chose to sign out
         for i in range(4): # cool '...' animation (for loop)
             print(f'Signing out{"." * i}', end='\r') # end='\r' is to overwrite the line to append the next '.' to signing out message
-            time.sleep(0.5) # time.sleep(1.5) is to slow down the animation
-        print('Signed out') # prints signed out after the animation
-        time.sleep(1) # waits 1 second before closing
-        # SIGN OUT WHEN I MADE THE SIGN IN SYSTEM !!!!!!!!!!!!!!!!!!!!!!!!!!
+            time.sleep(0.4) # time.sleep(0.4) is to slow down the animation
+        os.system('cls')
+        print('Signed out!\n') # prints signed out after the animation
+        for i in range(4): # cool '...' animation (for loop)
+            print(f'Returning to home screen{"." * i}', end='\r') 
+            time.sleep(0.4) # time.sleep(0.4) is to slow down the animation
+        time.sleep(0.6) # waits 1 second before closing
+        os.system('cls') # clear screen before returning to home screen
+        homeScreen() # calls homeScreen function to return to home screen, only choices are to login, create account, or guest which will overwrite current login session
 
 
 
 # ------ MAIN ------ #
 
+os.system('cls')
 homeScreen() # runs homeScreen function for first time users
 
 # ONLINE:??????????????

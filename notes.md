@@ -1,16 +1,16 @@
 # Amazing Dice Game - Development Notes
 
 ## To-Do List 
-1. Authentication System
+1. Authentication System ✔
    - Sign up functionality ✔
-   - Password requirements (12 chars, capital, lowercase, special char)
-   - Login system
-   - Guest mode
+   - Password requirements (12 chars, capital, lowercase, special char) ✔
+   - Login system ✔
+   - Guest mode ✔
 
-2. Stats System
+2. Stats System ✔
    - File management for storing stats ✔
-   - Stats display interface
-   - Track wins/losses 
+   - Stats display interface ✔
+   - Track wins/losses ✔
 
 3. Match System
    - Person vs Person 
@@ -19,6 +19,7 @@
      - 3 rolls per player ✔
      - Draw handling ✔
      - Score tracking ✔
+     - Make online queue?
    
    - Person vs Bot ✔
      - Difficulty modifiers implementation ✔
@@ -28,15 +29,20 @@
 
 4. UI Enhancements
    - ASCII art trophy for winners
-   - Score display formatting ✔ (kinda)
-   - Menu styling improvements
+   - Score display formatting ✔
+   - Menu styling improvements ✔
 
 ## Ideas for Future Features 
+- P2W would be hilarious
+- SHOP !!!!
 - Online multiplayer
 - Tournament mode
-- Custom dice sizes
+- Custom dice sizes (class/upgrade thing)
 - Achievement system
 - High score leaderboard
+- Classes that change dice stats + luck? (some bonuses from specific numbers? some get more points for lower, maybe take away opponents score? idk i want this to actualy be interesting not just pure rng and nothing else)
+- Upgrades using currencies
+- Cool rolling animations etc
 
 ## Bug Tracking 
 *Add bugs and issues here as they're discovered*
