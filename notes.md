@@ -28,9 +28,10 @@
      - Score tracking ✔
 
 4. UI Enhancements
-   - ASCII art trophy for winners
+   - ASCII art trophy for winners ✔
    - Score display formatting ✔
    - Menu styling improvements ✔
+   - Actual gui/maybe website or web app 
 
 ## Ideas for Future Features 
 - P2W would be hilarious
@@ -56,3 +57,6 @@
 - Each match consists of 3 rolls per player ✔
 - And five rounds ✔
 - Draws trigger additional rolls  ✔
+
+monday:
+remove scrolls on guis and work on converting all terminal stuff left over to guis, plus mroe gui design
