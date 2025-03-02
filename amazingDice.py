@@ -4,6 +4,7 @@ import random
 import time
 import json
 import os
+import hashlib
 
 # ------ GLOBAL VARIABLES ------ #
 
@@ -16,6 +17,9 @@ os.chdir(os.path.dirname(os.path.abspath(__file__))) # Change to the script's di
 # ------ USER DATA FUNCTIONS ------ #
 
 # note: this is so complicated bro 
+
+def hashPassword(password): # hashes password using SHA-256
+    return hashlib.sha256(password.encode('utf-8')).hexdigest()
 
 def loadUsers(): #loads user data from json file
     try:
@@ -49,8 +53,8 @@ def addNewUser(username, password): # adds a new user to the system
     
     # create new user with default stats
     data['users'][username] = {
-        "password": password,  # store the password
-        "joinDate": time.strftime("%Y-%m-%d"),  # store today's date
+        "hashedPassword": hashPassword(password),  # store the hashed password
+        "joinDate": time.strftime("%d/%m/%Y"),  # store today's date in UK format
         "stats": {
             "totalGames": 0,
             "wins": 0,
@@ -127,7 +131,7 @@ def login(): # login function where u enter username and password and it checks 
     userData = loadUsers() # loads user data
     
     if username in userData['users']: # checks if username exists
-        if userData['users'][username]['password'] == password: # checks if password is correct
+        if userData['users'][username]['hashedPassword'] == hashPassword(password): # checks if password is correct
             os.system('cls') # clears terminal
             print(f"Welcome back, {username}!") # prints welcome back message
             time.sleep(1)
@@ -172,7 +176,18 @@ def getDifficultyString(difficulty): # needed to convert difficulty to string fo
     return "hard"  # default fallback
 
 def homeScreen(): # defines homeScreen function that prints home screen for loging in or creating an account
-    print(f"{'='*width}\n{'Welcome to Amazing Dice!'.center(width)}\n{'='*width}\n".center(width))
+    print(f"\n{'='*width}")
+    print("Welcome to".center(width))
+    print("Amazing Dice!".center(width))
+    print(f"{'='*width}\n")
+    print("         ________")
+    print("        /\\   o   \\")
+    print("       /o \\       \\")
+    print("      /    \\   o   \\")
+    print("      \\    /       /")
+    print("       \\o /   o   /")
+    print("        \\/___o___/")
+    print("\nRoll the dice and test your luck!\n".center(width))
     time.sleep(2) # show welcome message for 2 seconds
     os.system('cls') # clear screen in prep for home screen
     choice = menu('home', None, None) # calls menu function with home as choice variable

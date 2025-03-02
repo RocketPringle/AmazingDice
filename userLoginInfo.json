@@ -1,8 +1,8 @@
 {
     "users": {
         "exampleUser": {
-            "password": "examplePassword123!",
-            "joinDate": "02-03-2025",
+            "hashedPassword": "examplePassword123!",
+            "joinDate": "00/00/0000",
             "stats": {
                 "totalGames": 0,
                 "wins": 0,
@@ -38,8 +38,8 @@
             }
         },
         "RocketPringle": {
-            "password": "Password123#",
-            "joinDate": "2025-03-02",
+            "hashedPassword": "Password123#",
+            "joinDate": "02/03/2025",
             "stats": {
                 "totalGames": 4,
                 "wins": 3,
@@ -75,8 +75,8 @@
             }
         },
         "TestUser": {
-            "password": "TestPassword123!",
-            "joinDate": "2025-03-02",
+            "hashedPassword": "TestPassword123!",
+            "joinDate": "02/03/2025",
             "stats": {
                 "totalGames": 0,
                 "wins": 0,

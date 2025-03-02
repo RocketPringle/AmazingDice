@@ -11,7 +11,7 @@
 
 ## Regular Usage
 
-### When you want to SEND changes to GitHub:
+### When you want to SEND changes to GitHub: (use cd AmazingDice again)
 1. Stage your changes:
    ```
    git add .
