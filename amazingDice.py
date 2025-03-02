@@ -5,6 +5,7 @@ import time
 import json
 import os
 import hashlib
+import amazingDiceGUI as adGUI
 
 # ------ GLOBAL VARIABLES ------ #
 
@@ -123,26 +124,19 @@ def viewUserStats(username): # displays user statistics
     print("="*width + "\n")
     return True
 
-def login(): # login function where u enter username and password and it checks if it exists and if it does it checks if the password is correct then returns username 
-    os.system('cls')
-    print(f"\n{'='*width}\n{'LOGIN'.center(width)}\n{'='*width}\n")
-    username = input("Username: ") # gets username
-    password = input("Password: ") # gets password
+def login(username, password): # login function that takes username and password as parameters and logs in user
     userData = loadUsers() # loads user data
+    print('loaded user data')
     
     if username in userData['users']: # checks if username exists
         if userData['users'][username]['hashedPassword'] == hashPassword(password): # checks if password is correct
-            os.system('cls') # clears terminal
-            print(f"Welcome back, {username}!") # prints welcome back message
-            time.sleep(1)
-            os.system('cls')
-            return username # returns username
+            return username # returns username if successful
         else: # if password is incorrect
             print("Incorrect password!") # prints incorrect password message
-            login()  # Try again by calling login again
+            return False
     else: # if username does not exist
         print("Username not found!") # prints username not found message
-        login()  # Try again by calling login again
+        return False
 
 def createAccount(): # creates an account
     userData = loadUsers() # loads user data
@@ -176,20 +170,6 @@ def getDifficultyString(difficulty): # needed to convert difficulty to string fo
     return "hard"  # default fallback
 
 def homeScreen(): # defines homeScreen function that prints home screen for loging in or creating an account
-    print(f"\n{'='*width}")
-    print("Welcome to".center(width))
-    print("Amazing Dice!".center(width))
-    print(f"{'='*width}\n")
-    print("         ________")
-    print("        /\\   o   \\")
-    print("       /o \\       \\")
-    print("      /    \\   o   \\")
-    print("      \\    /       /")
-    print("       \\o /   o   /")
-    print("        \\/___o___/")
-    print("\nRoll the dice and test your luck!\n".center(width))
-    time.sleep(2) # show welcome message for 2 seconds
-    os.system('cls') # clear screen in prep for home screen
     choice = menu('home', None, None) # calls menu function with home as choice variable
     if choice == 1: # if u pick login
         menuHandler(False, login()) # calls menuHandler function with False as guestMode variable and username as username variable returned by login function
@@ -372,8 +352,9 @@ def menuHandler(guestMode, username): # defines menuHandler function that deals 
 
 # ------ MAIN ------ #
 
-os.system('cls')
-homeScreen() # runs homeScreen function for first time users
+#os.system('cls')
+if __name__ == "__main__":
+    adGUI.home() # runs homeScreen function for first time users
 
 # ONLINE:??????????????
 

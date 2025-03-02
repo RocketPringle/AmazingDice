@@ -1,44 +1,7 @@
 {
     "users": {
-        "exampleUser": {
-            "hashedPassword": "examplePassword123!",
-            "joinDate": "00/00/0000",
-            "stats": {
-                "totalGames": 0,
-                "wins": 0,
-                "losses": 0,
-                "draws": 0,
-                "vsBot": {
-                    "easy": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "medium": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "hard": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "expert": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    }
-                },
-                "vsPlayer": {
-                    "wins": 0,
-                    "losses": 0,
-                    "draws": 0
-                }
-            }
-        },
         "RocketPringle": {
-            "hashedPassword": "Password123#",
+            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
             "joinDate": "02/03/2025",
             "stats": {
                 "totalGames": 4,
@@ -75,7 +38,7 @@
             }
         },
         "TestUser": {
-            "hashedPassword": "TestPassword123!",
+            "hashedPassword": "ffc121a2210958bf74e5a874668f3d978d24b6a8241496ccff3c0ea245e4f126",
             "joinDate": "02/03/2025",
             "stats": {
                 "totalGames": 0,
