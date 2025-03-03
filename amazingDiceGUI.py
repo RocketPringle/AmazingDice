@@ -1,12 +1,61 @@
 # ------ IMPORTS ------ #
-import customtkinter as ctk  # imports customtkinter library for modern GUI elements
+import customtkinter as ctk # type: ignore # imports customtkinter library for modern GUI elements
 import amazingDice as ad  # imports main game logic file
+from PIL import Image, ImageTk # use this for gif later aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHGgg
 
 # ------ MATCH WINDOW FUNCTIONS ------ #
 
+def match(botOrNot, difficulty, username, username2):
+    if botOrNot:
+        for i in range(0, 5):
+            ad.playRound(6,ad.getDifficultyInt(difficulty), None, None) 
+    else:
+        for i in range(0,5):
+            ad.playRound(6, None, username, username2)        
+
+def pvp(username):
+    print('hi')
+
+def bot(username):
+    botWindow = ctk.CTk()
+    botWindow.geometry('850x600')
+    botWindow.title('Amazing Dice - VS Bot')
+
+    titleLabel = ctk.CTkLabel(botWindow, text='Choose bot difficulty!', font=('Arial Bold', 30))
+    titleLabel.pack(pady=10)
+
+    def easyPressed():
+        botWindow.destry()
+        ad.match(True, 'easy', None)
+
+    def mediumPressed():
+        botWindow.destry()
+        ad.match(True, 'medium', None)
+
+    def hardPressed():
+        botWindow.destry()
+        ad.match(True, 'hard', None)
+
+    def expertPressed():
+        botWindow.destry()
+        ad.match(True, 'expert', None)    
+
+    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
+    easyButton.pack(pady=10)
+
+    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
+    easyButton.pack(pady=10)
+
+    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
+    easyButton.pack(pady=10)
+
+    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
+    easyButton.pack(pady=10)
+
+    
 def matchWindow(username, guestMode):  # defines match window function that takes username and guest mode status
     matchWindow = ctk.CTk()  # creates new window
-    matchWindow.geometry('600x500')  # sets window size to 600x500 pixels
+    matchWindow.geometry('850x600')  # sets window size to 600x500 pixels
     matchWindow.title('Amazing Dice - Match')  # sets window title
 
     titleLabel = ctk.CTkLabel(matchWindow, text="Match", font=('Arial Bold', 30))  # creates title label with large bold font
@@ -18,15 +67,31 @@ def matchWindow(username, guestMode):  # defines match window function that take
     messageLabel = ctk.CTkLabel(matchWindow, text="", text_color="red")  # creates empty error message label in red
     messageLabel.pack(pady=10)  # adds padding and displays message label
 
-    scrollFrame = ctk.CTkScrollableFrame(matchWindow, width=500, height=400)  # creates scrollable frame for content
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame with padding
-
     def backPressed():  # defines function for back button
         matchWindow.destroy()  # closes match window
         menu(guestMode, username)  # returns to menu
 
+    def pvpPressed():
+        if not guestMode:
+            matchWindow.destroy()
+            pvp(username)
+        else:
+            messageLabel.configure(text='Guests can only play against bots!')
+
+    def botPressed():
+        matchWindow.destroy() # make dropdown later w/ difficulties
+        bot(username)
+
+    botButton = ctk.CTkButton(matchWindow, text='VS Bot', command=botPressed)
+    botButton.pack(pady=10)
+
+    pvpButton = ctk.CTkButton(matchWindow, text='Vs Person', command=pvpPressed)
+    pvpButton.pack(pady=10)   
+
     backButton = ctk.CTkButton(matchWindow, text='Back', command=backPressed)  # creates back button
     backButton.pack(pady=10)  # adds padding and displays back button
+
+
 
     matchWindow.mainloop()  # starts the window event loop
 
@@ -34,7 +99,7 @@ def matchWindow(username, guestMode):  # defines match window function that take
 
 def statsWindow(stats, username):  # defines stats window function that takes stats dictionary and username
     statsWindow = ctk.CTk()  # creates new window
-    statsWindow.geometry('600x500')  # sets window size
+    statsWindow.geometry('850x600')  # sets window size
     statsWindow.title('Amazing Dice - Stats')  # sets window title
 
     titleLabel = ctk.CTkLabel(statsWindow, text=f"Stats for {username}", font=('Arial Bold', 30))  # creates title with username
@@ -80,7 +145,7 @@ def statsWindow(stats, username):  # defines stats window function that takes st
 
 def menu(guestMode, username):  # defines menu window function that takes guest mode status and username
     menuWindow = ctk.CTk()  # creates new window
-    menuWindow.geometry('600x500')  # sets window size
+    menuWindow.geometry('850x600')  # sets window size
     menuWindow.title('Amazing Dice - Menu')  # sets window title
 
     titleLabel = ctk.CTkLabel(menuWindow, text="Menu", font=('Arial Bold', 30))  # creates menu title
@@ -107,16 +172,13 @@ def menu(guestMode, username):  # defines menu window function that takes guest 
         menuWindow.destroy()  # closes menu window
         home()  # returns to home screen
 
-    scrollFrame = ctk.CTkScrollableFrame(menuWindow, width=500, height=400)  # creates scrollable frame for menu options
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame
-
-    statsButton = ctk.CTkButton(scrollFrame, text='View Stats', command=statsPressed)  # creates stats button
+    statsButton = ctk.CTkButton(menuWindow, text='View Stats', command=statsPressed)  # creates stats button
     statsButton.pack(pady=10)  # displays stats button with padding
 
-    matchButton = ctk.CTkButton(scrollFrame, text='Match', command=matchPressed)  # creates match button
+    matchButton = ctk.CTkButton(menuWindow, text='Match', command=matchPressed)  # creates match button
     matchButton.pack(pady=10)  # displays match button with padding
 
-    signOutButton = ctk.CTkButton(scrollFrame, text='Sign Out', command=signOutPressed)  # creates sign out button
+    signOutButton = ctk.CTkButton(menuWindow, text='Sign Out', command=signOutPressed)  # creates sign out button
     signOutButton.pack(pady=10)  # displays sign out button with padding
 
     menuWindow.mainloop()  # starts the window event loop
@@ -128,7 +190,7 @@ def login(loop):  # defines login window function that takes loop parameter
         loginWindow.destroy()  # destroys existing window
 
     loginWindow = ctk.CTk()  # creates new window
-    loginWindow.geometry('600x500')  # sets window size
+    loginWindow.geometry('850x600')  # sets window size
     loginWindow.title('Amazing Dice - Login')  # sets window title
 
     titleLabel = ctk.CTkLabel(loginWindow, text='Login to your account', font=('Arial Bold', 30))  # creates login title
@@ -136,9 +198,6 @@ def login(loop):  # defines login window function that takes loop parameter
 
     messageLabel = ctk.CTkLabel(loginWindow, text="", text_color="red")  # creates error message label
     messageLabel.pack(pady=10)  # displays message label with padding
-
-    scrollFrame = ctk.CTkScrollableFrame(loginWindow, width=500, height=400)  # creates scrollable frame for login form
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame
 
     def backPressed():  # defines function for back button
         loginWindow.destroy()  # closes login window
@@ -161,15 +220,15 @@ def login(loop):  # defines login window function that takes loop parameter
         else:
             messageLabel.configure(text="Login failed Check username and password")  # shows error for failed login
 
-    usernameField = ctk.CTkEntry(scrollFrame, placeholder_text='Enter username here', width=200, height=50)  # creates username input field
+    usernameField = ctk.CTkEntry(loginWindow, placeholder_text='Enter username here', width=200, height=50)  # creates username input field
     usernameField.pack(pady=10)  # displays username field with padding
     usernameField.bind('<Return>', onEnter)  # binds enter key to login function
 
-    passwordField = ctk.CTkEntry(scrollFrame, placeholder_text='Enter password here', width=200, height=50, show='*')  # creates password input field with hidden text
+    passwordField = ctk.CTkEntry(loginWindow, placeholder_text='Enter password here', width=200, height=50, show='*')  # creates password input field with hidden text
     passwordField.pack(pady=10)  # displays password field with padding
     passwordField.bind('<Return>', onEnter)  # binds enter key to login function
 
-    loginButton = ctk.CTkButton(scrollFrame, text='Login', command=loginPress)  # creates login button
+    loginButton = ctk.CTkButton(loginWindow, text='Login', command=loginPress)  # creates login button
     loginButton.pack(pady=10)  # displays login button with padding
 
     backButton = ctk.CTkButton(loginWindow, text='Back', command=backPressed)  # creates back button
@@ -184,7 +243,7 @@ def createAccountWindow(loop):  # defines create account window function that ta
         createAccountWindow.destroy()  # destroys existing window
 
     createAccountWindow = ctk.CTk()  # creates new window
-    createAccountWindow.geometry('600x500')  # sets window size
+    createAccountWindow.geometry('850x600')  # sets window size
     createAccountWindow.title('Amazing Dice - Create Account')  # sets window title
 
     titleLabel = ctk.CTkLabel(createAccountWindow, text='Create your account', font=('Arial Bold', 30))  # creates title
@@ -192,9 +251,6 @@ def createAccountWindow(loop):  # defines create account window function that ta
 
     messageLabel = ctk.CTkLabel(createAccountWindow, text="", text_color="red")  # creates error message label
     messageLabel.pack(pady=10)  # displays message label with padding
-
-    scrollFrame = ctk.CTkScrollableFrame(createAccountWindow, width=500, height=400)  # creates scrollable frame for form
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame
 
     def backPressed():  # defines function for back button
         createAccountWindow.destroy()  # closes create account window
@@ -223,15 +279,15 @@ def createAccountWindow(loop):  # defines create account window function that ta
             createAccountWindow.destroy()  # closes window if successful
             menu(False, username)  # opens menu with new account
 
-    usernameField = ctk.CTkEntry(scrollFrame, placeholder_text='Enter username here', width=200, height=50)  # creates username input field
+    usernameField = ctk.CTkEntry(createAccountWindow, placeholder_text='Enter username here', width=200, height=50)  # creates username input field
     usernameField.pack(pady=10)  # displays username field with padding
     usernameField.bind('<Return>', onEnter)  # binds enter key to create account function
 
-    passwordField = ctk.CTkEntry(scrollFrame, placeholder_text='Enter password here', width=200, height=50, show='*')  # creates password input field with hidden text
+    passwordField = ctk.CTkEntry(createAccountWindow, placeholder_text='Enter password here', width=200, height=50, show='*')  # creates password input field with hidden text
     passwordField.pack(pady=10)  # displays password field with padding
     passwordField.bind('<Return>', onEnter)  # binds enter key to create account function
 
-    createAccountButton = ctk.CTkButton(scrollFrame, text='Create Account', command=createAccountPressed)  # creates create account button
+    createAccountButton = ctk.CTkButton(createAccountWindow, text='Create Account', command=createAccountPressed)  # creates create account button
     createAccountButton.pack(pady=10)  # displays create account button with padding
 
     backButton = ctk.CTkButton(createAccountWindow, text='Back', command=backPressed)  # creates back button
@@ -243,14 +299,11 @@ def createAccountWindow(loop):  # defines create account window function that ta
 
 def home():  # defines home window function
     homeWindow = ctk.CTk()  # creates new window
-    homeWindow.geometry('600x500')  # sets window size
+    homeWindow.geometry('850x600')  # sets window size
     homeWindow.title('Amazing Dice')  # sets window title
 
     titleLabel = ctk.CTkLabel(homeWindow, text='Welcome to Amazing Dice', font=('Arial Bold', 30))  # creates welcome title
     titleLabel.pack(pady=10)  # displays title with padding
-
-    scrollFrame = ctk.CTkScrollableFrame(homeWindow, width=500, height=400)  # creates scrollable frame for buttons
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame
 
     def loginPressed():  # defines function for login button
         homeWindow.destroy()  # closes home window
@@ -264,13 +317,13 @@ def home():  # defines home window function
         homeWindow.destroy()  # closes home window
         menu(True, 'Guest')  # opens menu in guest mode
 
-    loginButton = ctk.CTkButton(scrollFrame, text="Login", command=loginPressed)  # creates login button
+    loginButton = ctk.CTkButton(homeWindow, text="Login", command=loginPressed)  # creates login button
     loginButton.pack(pady=10)  # displays login button with padding
 
-    createAccountButton = ctk.CTkButton(scrollFrame, text="Create Account", command=createAccountPressed)  # creates create account button
+    createAccountButton = ctk.CTkButton(homeWindow, text="Create Account", command=createAccountPressed)  # creates create account button
     createAccountButton.pack(pady=10)  # displays create account button with padding
 
-    guestButton = ctk.CTkButton(scrollFrame, text="Guest Mode", command=guestPressed)  # creates guest mode button
+    guestButton = ctk.CTkButton(homeWindow, text="Guest Mode", command=guestPressed)  # creates guest mode button
     guestButton.pack(pady=10)  # displays guest mode button with padding
 
     homeWindow.mainloop()  # starts the window event loop
