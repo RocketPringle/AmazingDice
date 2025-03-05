@@ -37,8 +37,10 @@ def match(botOrNot, difficulty, username, username2):
 
         if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win
             infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''}!")
-        elif botOrNot: # if u lost and vs bot !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            infoLabel.configure(text=f"{}")
+        elif botOrNot: # if u lost and vs bot
+            infoLabel.configure(text=f"You lost!", text_color='red')
+        else:
+            infoLabel.configure(text=f'{username2} wins!')
 
 
     infoLabel.configure(text=f'')
