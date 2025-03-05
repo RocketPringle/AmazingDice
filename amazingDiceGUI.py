@@ -2,16 +2,48 @@
 import customtkinter as ctk # type: ignore # imports customtkinter library for modern GUI elements
 import amazingDice as ad  # imports main game logic file
 from PIL import Image, ImageTk # use this for gif later aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHGgg
+import time
 
 # ------ MATCH WINDOW FUNCTIONS ------ #
 
+# ctk.set_appearance_mode('dark')
+
+def settings():
+    pass
+
 def match(botOrNot, difficulty, username, username2):
-    if botOrNot:
-        for i in range(0, 5):
-            ad.playRound(6,ad.getDifficultyInt(difficulty), None, None) 
-    else:
-        for i in range(0,5):
-            ad.playRound(6, None, username, username2)        
+
+    gameWindow = ctk.CTk()
+    gameWindow.geometry('850x600') # dash
+    gameWindow.title('Amazing dice - Match')
+
+    # add table later!!!!!!!!!!!!
+
+    infoLabel = ctk.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='green')    
+    infoLabel.pack(pady=10)
+
+    player1TotalLabel = ctk.CTkLabel(gameWindow, text='', font=('Arial', 15))
+    player1TotalLabel.pack(pady=10)
+
+    player2TotalLabel = ctk.CTkLabel(gameWindow, text='', font=('Arial', 15))
+    player2TotalLabel.pack(pady=10)
+
+    for i in range(0, 5):
+        rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else None) 
+        # cnfig table with roll 1 then roll 2 etc till dont
+        player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
+        # cnfig table with roll 1 adn 2 blah blah blah form other list
+        player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
+
+        if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win
+            infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''}!")
+        elif botOrNot: # if u lost and vs bot !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            infoLabel.configure(text=f"{}")
+
+
+    infoLabel.configure(text=f'')
+
+    gameWindow.mainloop()      
 
 def pvp(username):
     print('hi')
@@ -25,20 +57,20 @@ def bot(username):
     titleLabel.pack(pady=10)
 
     def easyPressed():
-        botWindow.destry()
-        ad.match(True, 'easy', None)
+        botWindow.destroy()
+        ad.match(True, 'easy', username, 'bot')
 
     def mediumPressed():
-        botWindow.destry()
-        ad.match(True, 'medium', None)
+        botWindow.destroy()
+        ad.match(True, 'medium', username, 'bot')
 
     def hardPressed():
-        botWindow.destry()
-        ad.match(True, 'hard', None)
+        botWindow.destroy()
+        ad.match(True, 'hard', username, 'bot')
 
     def expertPressed():
-        botWindow.destry()
-        ad.match(True, 'expert', None)    
+        botWindow.destroy()
+        ad.match(True, 'expert', username, 'bot')    
 
     easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
     easyButton.pack(pady=10)
@@ -51,6 +83,8 @@ def bot(username):
 
     easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
     easyButton.pack(pady=10)
+
+    botWindow.mainloop()
 
     
 def matchWindow(username, guestMode):  # defines match window function that takes username and guest mode status
@@ -172,11 +206,17 @@ def menu(guestMode, username):  # defines menu window function that takes guest 
         menuWindow.destroy()  # closes menu window
         home()  # returns to home screen
 
+    def settingsPressed():
+        menuWindow.destroy
+        settings()
+
     statsButton = ctk.CTkButton(menuWindow, text='View Stats', command=statsPressed)  # creates stats button
     statsButton.pack(pady=10)  # displays stats button with padding
 
     matchButton = ctk.CTkButton(menuWindow, text='Match', command=matchPressed)  # creates match button
     matchButton.pack(pady=10)  # displays match button with padding
+
+    settingsButton = ctk.CTkButton(menuWindow, text='Settings', command=settingsPressed)
 
     signOutButton = ctk.CTkButton(menuWindow, text='Sign Out', command=signOutPressed)  # creates sign out button
     signOutButton.pack(pady=10)  # displays sign out button with padding

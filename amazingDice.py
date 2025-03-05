@@ -124,7 +124,25 @@ def createAccount(username, password):  # defines function to create new account
 
 # ------ GAME FUNCTIONS ------ #
 
-def playRound(botOrNot, difficulty, username)
+def diceRoll(size, difficulty):
+    return random.randint(1,size) - difficulty
+
+def playRound(size, difficulty, username1, username2):
+    startRoll1, startRoll2 = diceRoll(size, None), diceRoll(size, None)
+    rollTotal1, rollTotal2 = 0, 0
+    rolls1, rolls2 = [], []
+    for i in range(0, 3):
+        rolls1.append(diceRoll(size, difficulty)) # roll for player 1
+        rolls2.append(diceRoll(size,difficulty)) # roll for player 2
+        # print(f'{username1 if startRoll1 > startRoll2 else username2} rolled {rolls1[i+1]}') # if player 1 won first roll print their name else player 2 as order means nothing
+        rollTotal1, rollTotal2 += rolls1[i+1], rolls2[i+1]
+    return rolls1, rolls2, rollTotal1, rollTotal2, startRoll1 > startRoll2
+        
+
+        
+        
+
+
 
 def getDifficultyInt(difficulty):  # defines function to convert difficulty number to string
     if difficulty == 'easy':
