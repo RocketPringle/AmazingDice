@@ -3,6 +3,7 @@ import customtkinter as ctk # type: ignore # imports customtkinter library for m
 import amazingDice as ad  # imports main game logic file
 from PIL import Image, ImageTk # use this for gif later aAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHGgg
 import time
+import CTkTable
 
 # ------ MATCH WINDOW FUNCTIONS ------ #
 
@@ -17,7 +18,11 @@ def match(botOrNot, difficulty, username, username2):
     gameWindow.geometry('850x600') # dash
     gameWindow.title('Amazing dice - Match')
 
-    # add table later!!!!!!!!!!!!
+    rollsList = [[0, 0, 0],
+                [0,0,0]]
+
+    rollTable = CTkTable(gameWindow, row=2, column=3, values=rollsList)
+    rollTable.pack(pady=10)
 
     infoLabel = ctk.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='green')    
     infoLabel.pack(pady=10)
@@ -28,19 +33,22 @@ def match(botOrNot, difficulty, username, username2):
     player2TotalLabel = ctk.CTkLabel(gameWindow, text='', font=('Arial', 15))
     player2TotalLabel.pack(pady=10)
 
-    for i in range(0, 5):
-        rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else None) 
-        # cnfig table with roll 1 then roll 2 etc till dont
-        player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
-        # cnfig table with roll 1 adn 2 blah blah blah form other list
-        player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
+    def startPressed():
+        for i in range(0, 5): # 5 rounds
+            rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else None)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts
+            rollsList = [rolls1,
+                        rolls2]
+            # cnfig table with roll 1 then roll 2 etc till dont
+            player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
+            # cnfig table with roll 1 adn 2 blah blah blah form other list
+            player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
 
-        if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win
-            infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''}!")
-        elif botOrNot: # if u lost and vs bot
-            infoLabel.configure(text=f"You lost!", text_color='red')
-        else:
-            infoLabel.configure(text=f'{username2} wins!')
+            if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win
+                infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''}!")
+            elif botOrNot: # if u lost and vs bot
+                infoLabel.configure(text=f"You lost!", text_color='red')
+            else:
+                infoLabel.configure(text=f'{username2} wins!')
 
 
     infoLabel.configure(text=f'')
@@ -60,31 +68,31 @@ def bot(username):
 
     def easyPressed():
         botWindow.destroy()
-        ad.match(True, 'easy', username, 'bot')
+        match(True, 'easy', username, 'bot')
 
     def mediumPressed():
         botWindow.destroy()
-        ad.match(True, 'medium', username, 'bot')
+        match(True, 'medium', username, 'bot')
 
     def hardPressed():
         botWindow.destroy()
-        ad.match(True, 'hard', username, 'bot')
+        match(True, 'hard', username, 'bot')
 
     def expertPressed():
         botWindow.destroy()
-        ad.match(True, 'expert', username, 'bot')    
+        match(True, 'expert', username, 'bot')    
 
     easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
     easyButton.pack(pady=10)
 
-    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
-    easyButton.pack(pady=10)
+    mediumButton = ctk.CTkButton(botWindow, text='Medium', command=mediumPressed)
+    mediumButton.pack(pady=10)
 
-    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
-    easyButton.pack(pady=10)
+    hardButton = ctk.CTkButton(botWindow, text='Hard', command=hardPressed)
+    hardButton.pack(pady=10)
 
-    easyButton = ctk.CTkButton(botWindow, text='Easy', command=easyPressed)
-    easyButton.pack(pady=10)
+    expertButton = ctk.CTkButton(botWindow, text='Expert', command=expertPressed)
+    expertButton.pack(pady=10)
 
     botWindow.mainloop()
 
@@ -369,5 +377,3 @@ def home():  # defines home window function
     guestButton.pack(pady=10)  # displays guest mode button with padding
 
     homeWindow.mainloop()  # starts the window event loop
-
-
