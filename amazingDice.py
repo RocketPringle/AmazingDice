@@ -127,7 +127,7 @@ def createAccount(username, password):  # defines function to create new account
 def diceRoll(size, difficulty):
     return random.randint(1,size) - difficulty
 
-def playRound(size, difficulty, username1, username2):
+def playRound(size, difficulty):
     startRoll1, startRoll2 = diceRoll(size, None), diceRoll(size, None)
     rollTotal1, rollTotal2 = 0, 0
     rolls1, rolls2 = [], []
