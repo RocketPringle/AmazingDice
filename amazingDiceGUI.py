@@ -15,13 +15,14 @@ def settings():
 def match(botOrNot, difficulty, username, username2):
 
     gameWindow = customtkinter.CTk()
-    gameWindow.geometry('850x600') # dash
+    gameWindow.geometry('850x600')
     gameWindow.title('Amazing dice - Match')
 
-    rollsList = [[0, 0, 0],
-                [0,0,0]]
+    rollsList = [['Roll 1', 'Roll 2', 'Roll 3'],
+                ['Player 1',0,0,0],
+                ['Player 2',0,0,0]]
 
-    rollTable = CTkTable(master=gameWindow, row=2, column=3, values=rollsList)
+    rollTable = CTkTable(master=gameWindow, row=3, column=4, values=rollsList)
     rollTable.pack(expand=True, padx=15, pady=15) 
 
     infoLabel = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='green')    
@@ -36,8 +37,32 @@ def match(botOrNot, difficulty, username, username2):
     def startPressed():
         for i in range(0, 5): # 5 rounds
             rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else None)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts
-            rollTable.configure(values=[rolls1,rolls2])
-            # cnfig table with roll 1 then roll 2 etc till dont
+            if player1Starts:
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], '-', '-'], ['Player 2', '-', '-', '-']])
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1]], ['Player 2', '-', '-', '-']])
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', '-', '-', '-']])
+            else:
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls1[0], '-', '-']])
+                infoLabel.configure(text='Rolling')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling.')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling..')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling...')
+                time.sleep(0.25)
+                infoLabel.configure(text='')
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls1[0], rolls1[1]]])
+                infoLabel.configure(text='Rolling')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling.')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling..')
+                time.sleep(0.25)
+                infoLabel.configure(text='Rolling...')
+                time.sleep(0.25)
+                infoLabel.configure(text='')
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2  ', rolls1[0], rolls1[1], rolls1[2]]])
             player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
             # cnfig table with roll 1 adn 2 blah blah blah form other list
             player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
