@@ -36,35 +36,41 @@ def match(botOrNot, difficulty, username, username2):
 
     def startPressed():
         for i in range(0, 5): # 5 rounds
-            rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else None)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts
+            rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else 0)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts
             if player1Starts:
+                infoLabel.configure(text='Rolling')
+                time.sleep(1)
+                infoLabel.configure(text='')
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], '-', '-'], ['Player 2', '-', '-', '-']])
+                infoLabel.configure(text='Rolling')
+                time.sleep(1)
+                infoLabel.configure(text='')
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1]], ['Player 2', '-', '-', '-']])
+                infoLabel.configure(text='Rolling')
+                time.sleep(1)
+                infoLabel.configure(text='')
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', '-', '-', '-']])
             else:
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls1[0], '-', '-']])
                 infoLabel.configure(text='Rolling')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling.')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling..')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling...')
-                time.sleep(0.25)
+                time.sleep(1)
                 infoLabel.configure(text='')
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls1[0], rolls1[1]]])
                 infoLabel.configure(text='Rolling')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling.')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling..')
-                time.sleep(0.25)
-                infoLabel.configure(text='Rolling...')
-                time.sleep(0.25)
+                time.sleep(1)
                 infoLabel.configure(text='')
                 rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2  ', rolls1[0], rolls1[1], rolls1[2]]])
             player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
-            # cnfig table with roll 1 adn 2 blah blah blah form other list
+            if player1Starts:
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls1[0], '-', '-']])
+                infoLabel.configure(text='Rolling')
+                time.sleep(1)
+                infoLabel.configure(text='')
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls1[0], rolls1[1], '-']])
+                infoLabel.configure(text='Rolling')
+                time.sleep(1)
+                infoLabel.configure(text='')
+                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2  ', rolls1[0], rolls1[1], rolls1[2]]])
             player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
 
             if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win

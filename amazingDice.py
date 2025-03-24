@@ -128,7 +128,7 @@ def diceRoll(size, difficulty):
     return random.randint(1,size) - difficulty
 
 def playRound(size, difficulty):
-    startRoll1, startRoll2 = diceRoll(size, None), diceRoll(size, None)
+    startRoll1, startRoll2 = diceRoll(size, difficulty), diceRoll(size, difficulty)
     rollTotal1, rollTotal2 = 0, 0
     rolls1, rolls2 = [], []
     for i in range(0, 3): # 3 rolls each
