@@ -125,14 +125,20 @@ def createAccount(username, password):  # defines function to create new account
 # ------ GAME FUNCTIONS ------ #
 
 def diceRoll(size, difficulty):
-    return random.randint(1,size) + difficulty
+    roll = random.randint(1,size) + difficulty
+    if roll < 0:
+        return 0
+    else:
+        return roll
+    
+    
 
 def playRound(size, difficulty):
-    startRoll1, startRoll2 = diceRoll(size, difficulty), diceRoll(size, difficulty)
+    startRoll1, startRoll2 = diceRoll(size, 0), diceRoll(size, difficulty)
     rolls1, rolls2 = [], []
     for i in range(0, 3): # 3 rolls each
-        rolls1.append(diceRoll(size, difficulty)) # roll for player 1
-        rolls2.append(diceRoll(size,difficulty)) # roll for player 2
+        rolls1.append(diceRoll(size, 0)) # roll for player 1
+        rolls2.append(diceRoll(size, difficulty)) # roll for player 2
         #rollTotal1, rollTotal2 += rolls1[i+1], rolls2[i+1] # add the roll to the total
     return rolls1, rolls2, sum(rolls1), sum(rolls2), startRoll1 > startRoll2
         

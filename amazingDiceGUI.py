@@ -18,7 +18,7 @@ def match(botOrNot, difficulty, username, username2):
     gameWindow.geometry('850x600')
     gameWindow.title('Amazing dice - Match')
 
-    rollsList = [['Roll 1', 'Roll 2', 'Roll 3'],
+    rollsList = [['','Roll 1', 'Roll 2', 'Roll 3'],
                 ['Player 1',0,0,0],
                 ['Player 2',0,0,0]]
 
@@ -35,67 +35,185 @@ def match(botOrNot, difficulty, username, username2):
     player2TotalLabel.pack(pady=10)
 
     def startPressed():
+        playerScore1, playerScore2 = 0, 0
         for i in range(0, 5): # 5 rounds
+            infoLabel.configure(text_color='gray')
             print(f'round started ({i+1})')
             rolls1, rolls2, rollTotal1, rollTotal2, player1Starts = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else 0)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts
             print('rolled (playround)')
             if player1Starts:
+                infoLabel.configure(text=f'{username} starts!', text_color=('green' if botOrNot else 'yellow'))
                 infoLabel.configure(text='Rolling')
+                print('skibidi player 1 starts')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], '-', '-'], ['Player 2', '-', '-', '-']])
+                gameWindow.update()
+                time.sleep(1)
+                print('set to blank')
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], '-', '-'], ['Player 2', '-', '-', '-']])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1]], ['Player 2', '-', '-', '-']])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1]], ['Player 2', '-', '-', '-']])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', '-', '-', '-']])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', '-', '-', '-']])
+                infoLabel.configure(text='')
+                gameWindow.update()
+                time.sleep(1)
+                print('skibidiiiiiiiiii')
             else:
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls2[0], '-', '-']])
+                infoLabel.configure(text=f'{username2} starts!', text_color=('red' if botOrNot else 'yellow'))
+                print('skibidi')
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls2[0], '-', '-']])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls2[0], rolls2[1]]])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2', rolls2[0], rolls2[1]]])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2  ', rolls2[0], rolls2[1], rolls2[2]]])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', '-', '-', '-'], ['Player 2  ', rolls2[0], rolls2[1], rolls2[2]]])
+                gameWindow.update()
+                print('skibidi')
+                infoLabel.configure(text='')
+                gameWindow.update()
+                time.sleep(1)
             player1TotalLabel.configure(text=f'{username if player1Starts else username2} rolled a total of {rollTotal1}!')
+            gameWindow.update()
             if player1Starts:
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls2[0], '-', '-']])
+                print('skibidiiiiiiiiiiii2')
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls2[0], '-', '-']])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls2[0], rolls2[1], '-']])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls2[0], rolls2[1], '-']])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
                 infoLabel.configure(text='')
-                rollTable.configure(values=[['Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2  ', rolls2[0], rolls2[1], rolls2[2]]])
+                gameWindow.update()
+                time.sleep(1)
+                rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2  ', rolls2[0], rolls2[1], rolls2[2]]])
+                print('eeeeeeeeeeeeeeeeeeee')
+                infoLabel.configure(text='')
+                gameWindow.update()
+                time.sleep(1)
+                print('skibidiiiiiiiiiiiiii2')
             else:
+                print('skibidi2')
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], '-', '-'], ['Player 2', rolls2[0], rolls2[1], rolls2[2]]])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeee')
+                gameWindow.update()
+                time.sleep(1)
+                infoLabel.configure(text='')
+                gameWindow.update()
                 time.sleep(1)
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], '-'], ['Player 2', rolls2[0], rolls2[1], rolls2[2]]])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeee')
+                gameWindow.update()
+                time.sleep(1)
+                infoLabel.configure(text='')
+                gameWindow.update()
                 time.sleep(1)
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], ['Player 1', rolls1[0], rolls1[1], rolls1[2]], ['Player 2', rolls2[0], rolls2[1], rolls2[2]]])
                 infoLabel.configure(text='Rolling')
+                print('eeeeeeeeeeeeeeeeeeeeeee')
+                gameWindow.update()
                 time.sleep(1)
+                infoLabel.configure(text='')
+                gameWindow.update()
+                time.sleep(1)
+                print('skibidi2')
+            print('ohio')
             player2TotalLabel.configure(text=f'{username2 if player1Starts else username} rolled a total of {rollTotal2}!')
+            gameWindow.update()
 
             if (rollTotal1 > rollTotal2 and player1Starts) or (rollTotal1 < rollTotal2 and not player1Starts): # you win
-                infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''} round {i+1}!")
+                infoLabel.configure(text=f"{username if not botOrNot else 'You'} win{'s' if not botOrNot else ''} round {i+1}!", text_color='green')
+                playerScore1 += 1
             elif botOrNot: # if u lost and vs bot
                 infoLabel.configure(text=f"You lost round {i+1}!", text_color='red')
+                playerScore2 += 1
             else:
                 infoLabel.configure(text=f'{username2} wins round {i+1}!')
-            time.sleep(9999)
-
+                playerScore2 += 1
+            print('ohio')
+            gameWindow.update()
+        if playerScore2 < playerScore1:
+            infoLabel.configure(text='You win!', text_color='green')
+            if username != 'Guest':  # Only update stats if not in guest mode
+                userData = ad.loadUsers()
+                userData['users'][username]['stats']['totalGames'] += 1
+                userData['users'][username]['stats']['wins'] += 1
+                if username2 == 'bot':
+                    if difficulty == -2:
+                        difficultyString = 'easy'
+                    elif difficulty == -1:
+                        difficultyString = 'medium'
+                    elif difficulty == 0:
+                        difficultyString = 'hard'
+                    else:
+                        difficultyString = 'expert'
+                    userData['users'][username]['stats']['vsBot'][difficultyString]['wins'] += 1
+                else:
+                    userData['users'][username]['stats']['vsPlayer']['wins'] += 1
+                ad.saveUsers(userData)
+        else:
+            infoLabel.configure(text='You dont win!', text_color='red')
+            if username != 'Guest':
+                userData = ad.loadUsers()
+                userData['users'][username]['stats']['totalGames'] += 1
+                userData['users'][username]['stats']['losses'] += 1
+                if username2 == 'bot':
+                    if difficulty == -2:
+                        difficultyString = 'easy'
+                    elif difficulty == -1:
+                        difficultyString = 'medium'
+                    elif difficulty == 0:
+                        difficultyString = 'hard'
+                    else:
+                        difficultyString = 'expert'
+                    userData['users'][username]['stats']['vsBot'][difficultyString]['losses'] += 1
+                else:
+                    userData['users'][username]['stats']['vsPlayer']['losses'] += 1
+                ad.saveUsers(userData)
+        
+    def backPressed():
+        gameWindow.destroy()
+        guestMode = (username2.lower() == 'guest')
+        matchWindow(username, guestMode)
 
     startButton = customtkinter.CTkButton(gameWindow, text='Start', font=('Arial', 15), command=startPressed)
     startButton.pack(pady=10)
+
+    backButton = customtkinter.CTkButton(gameWindow, text='Back', font=('Arial', 15), command=backPressed)
+    backButton.pack(pady=10)
 
     gameWindow.mainloop()      
 
@@ -271,6 +389,7 @@ def menu(guestMode, username):  # defines menu window function that takes guest 
     matchButton.pack(pady=10)  # displays match button with padding
 
     settingsButton = customtkinter.CTkButton(menuWindow, text='Settings', command=settingsPressed)
+    settingsButton.pack(pady=10)
 
     signOutButton = customtkinter.CTkButton(menuWindow, text='Sign Out', command=signOutPressed)  # creates sign out button
     signOutButton.pack(pady=10)  # displays sign out button with padding
