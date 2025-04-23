@@ -1,43 +1,128 @@
 # ------ MODULES ------ #
 
-width = 9
-
 import random  # imports random module for dice rolls
 import time  # imports time module for delays and animations
 import json  # imports json module for user data storage
 import os  # imports os module for file operations
 import hashlib  # imports hashlib module for password hashing
 import amazingDiceGUI as adGUI  # imports GUI module
+import keyring
 
-# ------ FILE STUFF ------ #
 
-os.chdir(os.path.dirname(os.path.abspath(__file__)))  # changes to scripts directory for file operations
 
-# ------ USER DATA FUNCTIONS ------ #
+# MARK: - FILE STUFF
+
+os.chdir(os.path.dirname(os.path.abspath(__file__)))  # changes to scripts directory for file operations (FUTURE ME DOESNT UNDERSTAND WHAT)
+
+# MARK: - USER DATA FUNCTIONS
+
+def checkLogin(username, hashedPassword):
+    data = loadUsers()
+    if username in data['users']:
+        if data['users'][username]['hashedPassword'] == hashedPassword:
+            return True
+    return False
+
+# MARK: - LOAD LAST LOGGED
+
+def loadLastLogged():
+    try:
+        with open('lastedLogged.json', 'r') as file:
+            return json.load(file)
+    except:
+        return {"savedLogins": {}}
+
+# MARK: - SAVE LOGIN
+
+def saveLogin(username, password, remember=True):
+    # If remember is False, delete any saved credentials
+    if not remember:
+        try:
+            # Delete the saved password for this username
+            keyring.delete_password("AmazingDice", username)
+            
+            # Delete the record of who was the last logged in user
+            keyring.delete_password("AmazingDice", "lastUser")
+
+        except:
+            # Print error if deletion fails (but don't disrupt program flow)
+            print('Error removing saved login')
+        return
+    
+    try:
+        # Store the actual password (not hashed) securely in Windows Credential Manager
+        # "AmazingDice" is the service name (identifies our application)
+        # username is the key under which we store the password
+        keyring.set_password("AmazingDice", username, password)
+        
+        # Also store which user was last logged in
+        # This helps us know whose credentials to retrieve on startup
+        keyring.set_password("AmazingDice", "lastUser", username)
+        
+    except:
+        print("error saving login")
+
+# MARK: - CHECK SAVED LOGIN
+
+def checkSavedLogin():
+    try:
+        # First retrieve the username of the last logged in user
+        username = keyring.get_password("AmazingDice", "lastUser")
+        
+        # If we found a last logged in user
+        if username:
+            try:
+                # Get their saved password from the credential manager
+                password = keyring.get_password("AmazingDice", username)
+                
+                # If we found a password
+                if password:
+                    # Return success along with the username and the hashed version of the password
+                    # (hashing here because other functions expect the hashed version)
+                    return True, username, hashPassword(password)
+            except Exception as e:
+                print(f"Error retrieving password: {e}")
+    except Exception as e:
+        # Print error if retrieval fails
+        print(f"Error checking saved login: {e}")
+    
+    # Return default values if no saved login was found or an error occurred
+    return False, None, None
+
+# MARK: - CHECK PASSWORD
+
+def checkPassword(username, password):
+    data = loadUsers()
+    if username in data['users']:
+        if data['users'][username]['hashedPassword'] == hashPassword(password):
+            return True
+    return False
+
+# MARK: - HASH PASSWORD
 
 def hashPassword(password):  # defines function to hash passwords using SHA256
     return hashlib.sha256(password.encode('utf-8')).hexdigest()  # returns password as hashed version ig idk
 
+# MARK: - LOAD USERS
+
 def loadUsers():  # defines function to load user data from JSON file
     try:
-        with open('userLoginInfo.json', 'r') as file:  # attempts to open user data file
-            return json.load(file)  # returns user data as dictionary
-    except FileNotFoundError:  # handles case where file doesnt exist
-        print("Warning User data file not found Creating temporary user structure")  # prints warning message
-        return {"users": {}}  # returns empty user structure
-    except PermissionError:  # handles case where file cant be accessed
-        print("Error Cannot access user data file Creating temporary user structure")  # prints error message
-        return {"users": {}}  # returns empty user structure
-    except json.JSONDecodeError:  # handles case where file is corrupted
-        print("Error User data file is corrupted Creating temporary user structure")  # prints error message
-        return {"users": {}}  # returns empty user structure
+        with open('userInfo.json', 'r') as file:
+            return json.load(file)
+    except:
+        print("error loading users")
+        return {"users": {}}
+
+# MARK: - SAVE USERS
 
 def saveUsers(data):  # defines function to save user data to JSON file
     try:
-        with open('userLoginInfo.json', 'w') as file:  # opens file in write mode
-            json.dump(data, file, indent=4)  # writes data to file with formatting
-    except PermissionError:  # handles case where file cant be written
-        print("Error Cannot save user data Check file permissions")  # prints error message
+        with open('userInfo.json', 'w') as file:
+            json.dump(data, file, indent=4)
+    except:
+        print("error saving users")
+
+# MARK: - ADD NEW USER
 
 def addNewUser(username, password):  # defines function to add new user to system
     data = loadUsers()  # loads current user data
@@ -81,6 +166,19 @@ def addNewUser(username, password):  # defines function to add new user to syste
                 "losses": 0,
                 "draws": 0
             }
+        },
+        "achievements": [],  # initializes empty achievements list
+        "achievementProgress": {  # initializes achievement progress
+            "wins": 0,
+            "losses": 0,
+            "draws": 0,
+            "totalGames": 0,
+            "consecutiveWins": 0,
+            "consecutiveLosses": 0,
+            "perfectScore": 0,
+            "sweepGame": 0,
+            "loseByOne": 0,
+            "gamesPlayed": 0
         }
     }
     
@@ -88,67 +186,102 @@ def addNewUser(username, password):  # defines function to add new user to syste
     print(f"\nUser {username} created successfully\n")  # prints success message
     return True  # returns True if user created successfully
 
+# MARK: - CREATE ACCOUNT
+
+def createAccount(username, password):  # defines function to create new account
+    if addNewUser(username, password):  # attempts to create account
+        return True  # returns gud
+    else:
+        return False  # returns bad
+
+# MARK: - GET USER STATS
+
 def getStats(username):  # defines function to get user statistics
     data = loadUsers()  # loads user data
     stats = data['users'][username]['stats']  # gets users stats
     return stats  # returns stats dictionary
 
-def login(username, password):  # defines function to handle user login
-    userData = loadUsers()  # loads user data
-    print('loaded user data')  # prints debug message
-    
-    if username in userData['users']:  # checks if username exists
-        if userData['users'][username]['hashedPassword'] == hashPassword(password):  # checks if password is correct
-            return username  # returns username if login successful
-        else:
-            print("Incorrect password")  # prints error for wrong password
-            return False  # returns False for failed login
-    else:
-        print("Username not found")  # prints error for missing username
-        return False  # returns False for failed login
+# MARK: - EDIT USER FUNCTION
 
-def createAccount(username, password):  # defines function to create new account
-    userData = loadUsers()  # loads user data
-    if username in userData['users']:  # checks if username exists
-        print('Username already exists\nTry a different username')  # prints error message
-        createAccount(username, password)  # recursively tries again
-    while not (len(password) >= 12 and  # checks password requirements
-              any(c.isdigit() for c in password) and  # must have number
-              any(c.isupper() for c in password) and  # must have uppercase
-              any(c.islower() for c in password) and  # must have lowercase
-              any(c in r'!#$%&()*+,-./:;<=>?@[]^_`{|}~\'"' for c in password)):  # must have special character
-        print("Password must be at least 12 characters and contain uppercase lowercase numbers and special characters")  # prints requirements
-    if addNewUser(username, password):  # attempts to add new user
-        print(f"Account created successfully Welcome {username}")  # prints success message
-        return username  # returns username if successful
+def editUser(username, newPassword):
+    userData = loadUsers()
+    if userData['users'][username]['hashedPassword'] == hashPassword(newPassword): # ITS THE SAMEE AAA
+        return 'You must use a different password to your current password!', False
+    else: # different
+        userData['users'][username]['hashedPassword'] = hashPassword(newPassword) # change
+        saveUsers(userData)
+        return 'Success! Password changed.', True
 
-# ------ GAME FUNCTIONS ------ #
+# MARK: - LOGIN FUNCTION
+
+def login(username, password):  # defines function to verify login credentials
+    data = loadUsers()  # loads user data
+    if username in data['users']:  # checks if username exists
+        if data['users'][username]['hashedPassword'] == hashPassword(password):  # checks if password matches
+            return True  # returns True if credentials are valid
+    return False  # returns False if either username doesn't exist or password is wrong
+
+# MARK: - LOAD USER SETTINGS
+
+def loadUserSettings(): # create function to load user settings from userSettings.json and return it as dictionary
+    try:
+        with open('userSettings.json', 'r') as file: # try to open userSettings.json
+            return json.load(file) # return settings
+    except:
+        print("error loading settings")
+        return {"users": {}} # return empty dictionary if error
+
+# MARK: - SAVE ALL SETTINGS
+
+def saveAllUserSettings(userData):
+    try:
+        with open('userSettings.json', 'w') as file:
+            json.dump(userData, file, indent=4)
+    except:
+        print("error saving settings")
+
+# MARK: - GET USER SETTINGS
+
+def getUserSettings(username):
+    userData = loadUserSettings() # loads all settings
+    if username in userData['users']: # if username is stored in settings
+        return userData['users'][username] # return settings
+    # Return default settings if user has no settings saved
+    return {'fastRoll': False, 'theme': 'light'} # return default settings if user has no settings saved
+
+# MARK: - SAVE USER SETTINGS
+
+# ts is complex so ima explain:i
+# saveUserSettings is called when the user changes a setting with settings var being the changed setting, eg fastRoll = True
+# when it needs to be saved it gets all the settings then edits the one that was changed
+# saveAllUserSettings is called when this ^^^ is done
+# all that does is dump the userData into the file
+
+def saveUserSettings(username, settings): # create function to save user settings to username
+    userData = loadUserSettings() # gets all settings
+    userData['users'][username] = settings # saves settings to username
+    saveAllUserSettings(userData) # saves all settings to file
+
+# MARK: - DICE ROLL
 
 def diceRoll(size, difficulty):
-    roll = random.randint(1,size) + difficulty
-    if roll < 0:
-        return 0
-    else:
-        return roll
-    
-    
+    return random.randint(1,size) + difficulty # THIS FUNCTUIOIN DOESNT MATTER ITS SO SHORT AND DUMB
+
+# MARK: - PLAY ROUND
 
 def playRound(size, difficulty):
-    startRoll1, startRoll2 = diceRoll(size, 0), diceRoll(size, difficulty)
-    rolls1, rolls2 = [], []
+    startRoll1, startRoll2 = 0,0 # set to same defaul ig idk INITIALISE THATS THE WORKD
+    while startRoll1 == startRoll2: # IF EQUAL SO DRAWS (IKTS NOT WHILE TRUE YAAAAYAYAYA) <- EXTRA POINTS FOR THAT PLS 🙏🙏🙏🙏
+        startRoll1, startRoll2 = diceRoll(size, 0), diceRoll(size, difficulty) # ROLS FOR IRSTR THIS IS DUMB WHO CARES WHO;S FIRST AAA
+    rolls1, rolls2 = [], [] # INITISALKISE
     for i in range(0, 3): # 3 rolls each
         rolls1.append(diceRoll(size, 0)) # roll for player 1
-        rolls2.append(diceRoll(size, difficulty)) # roll for player 2
-        #rollTotal1, rollTotal2 += rolls1[i+1], rolls2[i+1] # add the roll to the total
-    return rolls1, rolls2, sum(rolls1), sum(rolls2), startRoll1 > startRoll2
-        
+        rolls2.append(diceRoll(size, difficulty)) # roll for player 2, difficulty included as bots can only be player 2
+    return rolls1, rolls2, sum(rolls1), sum(rolls2), startRoll1 > startRoll2, startRoll1, startRoll2
 
-        
-        
+# MARK: - DIFFICULTY INT
 
-
-
-def getDifficultyInt(difficulty):  # defines function to convert difficulty number to string
+def getDifficultyInt(difficulty):  # defines function to convert difficulty int to string
     if difficulty == 'easy':
         return -2
     elif difficulty == 'medium':
@@ -156,50 +289,117 @@ def getDifficultyInt(difficulty):  # defines function to convert difficulty numb
     elif difficulty == 'hard':
         return 0
     else:
-        return 1  
+        return +1  
+
+# MARK: - START FUNCTION
+
+def start():
+    hasSavedLogin, username, hashedPassword = checkSavedLogin() # get username and hashed password from saved login or returns False, None, None if no saved login
+    if hasSavedLogin:  # if there is a saved login
+        if checkLogin(username, hashedPassword): # checks if saved login is valid, eg pasword changed but not saved 
+            adGUI.login(username, hashedPassword) # open login with saved login and settings
+    else:
+        adGUI.home() # open home if no saved login for default behaviour
+
+# MARK: - GET ACHIEVEMENTS
+
+def getAchievements(username):
+    data = loadUsers()
+    if 'achievements' in data['users'][username]:
+        return data['users'][username]['achievements']
+    return []
+
+# MARK: - LOAD ACHIEVEMENTS
+
+def loadAchievements():
+    try:
+        with open('achievements.json', 'r') as file:
+            return json.load(file)
+    except:
+        print("error loading achievements")
+        return {"achievements": {}}
+
+# MARK: - CHECK ACHIEVEMENT
+
+def checkAchievement(username, achievementType, value=1):
+    userData = loadUsers()
+    allAchievements = loadAchievements()
     
-
-
-# ------ MAIN ------ #
-
-if __name__ == "__main__":  # checks if file is being run directly
-    adGUI.home()  # starts GUI application
-
-# ONLINE:??????????????
-
-# sign up:
-    # make user + pass (pass can be random and has to be 12 chars, capital and lowercase, special char)
-# log in:
-    # get username + pass 
-# guest
-    # no acc
-
-# show menu:
-    # stats choice ✔
-    # match with other (who signs in) or bot (difficulties make bot roll more times? or have buffed odds ig idk this ist skil based bro) ✔
-    # logout ✔
-
-# stats choice:
-    # use file management to show stats
-
-# match choice:
-    # person:
-        # other player sign in or guest (no acc)
-        # do first roll to determine first ppl draws etc
-        # roll 3 times and total for each person
-        # if draw, roll again
-        # whoever largest gets point stored in dict
-        # find largest points
-        # print ascii art trophy with score under
-    # bot:
-        # difficulties:
-            # easy does score but -2 ✔
-            # med does score but -1 ✔  
-            # hard does score but -0 ✔
-            # expert does score but +1 ✔
-        # both roll 3 times and total for each person but bot -x based on difficulty
-        # if draw, roll again
-        # whoever largest gets point stored in dict
-        # find largest points
-        # print ascii art trophy with score under
+    # Initialize achievements array if not exists
+    if 'achievements' not in userData['users'][username]:
+        userData['users'][username]['achievements'] = []
+    
+    # Initialize achievement progress if not exists
+    if 'achievementProgress' not in userData['users'][username]:
+        userData['users'][username]['achievementProgress'] = {}
+    
+    # Get current achievements and progress
+    userAchievements = userData['users'][username]['achievements']
+    userProgress = userData['users'][username]['achievementProgress']
+    
+    # Initialize progress for this type if not exists
+    if achievementType not in userProgress:
+        userProgress[achievementType] = 0
+    
+    # Update progress for the achievement type
+    if achievementType in ['consecutiveWins', 'consecutiveLosses']:
+        # These are special cases that need to be reset sometimes
+        if achievementType == 'consecutiveWins' and value > 0:
+            userProgress[achievementType] += 1
+            userProgress['consecutiveLosses'] = 0  # Reset lose streak
+        elif achievementType == 'consecutiveLosses' and value > 0:
+            userProgress[achievementType] += 1
+            userProgress['consecutiveWins'] = 0  # Reset win streak
+        else:
+            userProgress[achievementType] = 0  # Reset if not incrementing
+    else:
+        # For most achievement types, just add the value
+        userProgress[achievementType] += value
+    
+    # Check all achievements against progress
+    newAchievements = []
+    for achievementId, achievement in allAchievements['achievements'].items():
+        # Skip already achieved ones
+        alreadyAchieved = False
+        for userAchievement in userAchievements:
+            if userAchievement.get('id') == achievementId:
+                alreadyAchieved = True
+                break
         
+        if alreadyAchieved:
+            continue
+        
+        # Check if achievement is of the right type and requirement is met
+        if achievement['type'] == achievementType and userProgress.get(achievementType, 0) >= achievement['requirement']:
+            # Create new achievement object
+            newAchievement = {
+                'id': achievementId,
+                'name': achievement['secretName'] if achievement['secret'] else achievement['name'],
+                'description': achievement['secretDescription'] if achievement['secret'] else achievement['description'],
+                'achieved': True,
+                'date': time.strftime("%d/%m/%Y"),
+                'progress': userProgress.get(achievementType, 0),
+                'requirement': achievement['requirement']
+            }
+            userAchievements.append(newAchievement)
+            newAchievements.append(newAchievement)
+    
+    # Save updated user data
+    if newAchievements:
+        userData['users'][username]['achievementProgress'] = userProgress
+        userData['users'][username]['achievements'] = userAchievements
+        saveUsers(userData)
+    
+    return newAchievements
+
+# MARK: - MAIN
+
+if __name__ == "__main__":  # checks if file is being run directly (not from import)
+    start()  # starts it
+
+# MAKE SAVED LOGIN SHOW UP AS LIKE AUTOCOMPLETE ON LOGIN SCREEN
+
+# ONLINE:?????????????? NO I RAN OUT OF TIME I PROCRASTINATED THIS TILL THE LAST WEEK OOOPS
+
+# self reminder: 'a' account is special testing account with password 'e' to save time logging in during MANY tests
+# incase of password change during test, the hash of 'e' is , 3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea, to be directly added in userLoginInfo.json

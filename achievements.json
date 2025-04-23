@@ -1,0 +1,150 @@
+{
+    "achievements": {
+        "diceDabbler": {
+            "name": "Dice Dabbler",
+            "description": "Win your first game",
+            "requirement": 1,
+            "type": "wins",
+            "icon": "images/icons/diceDabbler.png",
+            "secret": false
+        },
+        "mildlyMenacing": {
+            "name": "Mildly Menacing",
+            "description": "Win 5 games",
+            "requirement": 5,
+            "type": "wins",
+            "icon": "images/icons/mildlyMenacing.png",
+            "secret": false
+        },
+        "doubleDigits": {
+            "name": "Double digits",
+            "description": "Win 10 games",
+            "requirement": 10,
+            "type": "wins",
+            "icon": "images/icons/doubleDigits.png",
+            "secret": false
+        },
+        "adictionBegins": {
+            "name": "Adiction Begins",
+            "description": "Win 20 games",
+            "requirement": 20,
+            "type": "wins",
+            "icon": "images/icons/adictionBegins.png",
+            "secret": false
+        },
+        "halfACentury": {
+            "name": "Half a Century",
+            "description": "Win 50 games",
+            "requirement": 50,
+            "type": "wins",
+            "icon": "images/icons/halfACentury.png",
+            "secret": false
+        },
+        "diceFather": {
+            "name": "The Dice Father",
+            "description": "Win 100 games",
+            "requirement": 100,
+            "type": "wins",
+            "icon": "images/icons/diceFather.png",
+            "secret": false
+        },
+        "rollModel": {
+            "name": "Roll Model",
+            "description": "Win 200 games",
+            "requirement": 200,
+            "type": "wins",
+            "icon": "images/icons/rollModel.png",
+            "secret": false
+        },
+        "lockedIn": {
+            "name": "Locked In",
+            "description": "Win 500 games",
+            "requirement": 500,
+            "type": "wins",
+            "icon": "images/icons/lockedIn.png",
+            "secret": false
+        },
+        "absoluteNoLifer": {
+            "name": "Absolute No-Lifer",
+            "description": "Win 1000 games",
+            "requirement": 1000,
+            "type": "wins",
+            "icon": "images/icons/noLifer.png",
+            "secret": false
+        },
+        "whoops": {
+            "name": "Whoops",
+            "description": "Lose 1 game",
+            "requirement": 1,
+            "type": "losses",
+            "icon": "images/icons/whoops.png",
+            "secret": false
+        },
+        "unluckoModeActivated": {
+            "name": "Unlucko Mode Activated",
+            "description": "Lose 5 games",
+            "requirement": 5,
+            "type": "losses",
+            "icon": "images/icons/unluckoModeActivated.png",
+            "secret": false
+        },
+        "RNGesusHatesYou": {
+            "name": "RNGesus Hates You",
+            "description": "Lose 10 games",
+            "requirement": 10,
+            "type": "losses",
+            "icon": "images/icons/RNGesusHatesYou.png",
+            "secret": false
+        },
+        "beginner": {
+            "name": "Beginner",
+            "description": "Play your first game",
+            "requirement": 1,
+            "type": "gamesPlayed",
+            "icon": "images/icons/beginner.png",
+            "secret": false
+        },
+        "diceWhisperer": {
+            "name": "Dice Whisperer",
+            "description": "Win a round with a perfect score (18)",
+            "requirement": 1,
+            "type": "perfectScore",
+            "icon": "images/icons/diceWhisperer.png",
+            "secret": false
+        },
+        "sweep": {
+            "name": "Sweep",
+            "description": "Win all 5 rounds in 1 game",
+            "requirement": 1,
+            "type": "sweepGame",
+            "icon": "images/icons/sweep.png",
+            "secret": false
+        },
+        "luckyStreak": {
+            "name": "Lucky Streak",
+            "description": "Win 5 consecutive games",
+            "requirement": 5,
+            "type": "consecutiveWins",
+            "icon": "images/icons/luckyStreak.png",
+            "secret": false
+        },
+        "unluckyStreak": {
+            "name": "Unlucky Streak",
+            "description": "Lose 5 consecutive games",
+            "requirement": 5,
+            "type": "consecutiveLosses",
+            "icon": "images/icons/unluckyStreak.png",
+            "secret": false
+        },
+        "oneAwaySecret": {
+            "name": "???",
+            "description": "???",
+            "secretName": "The One That Got Away",
+            "secretDescription": "Lose a match by exactly 1 point",
+            "requirement": 1,
+            "type": "loseByOne",
+            "icon": "images/icons/oneAway.png",
+            "secret": true
+        }
+    }
+}
