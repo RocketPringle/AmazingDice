@@ -257,13 +257,21 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 # 7. WAIT FOR 100/1000 MS (depends on fastroll)
                 # 8. DO IT 
 
+                # generate bracket texts
+                if botOrNot and difficulty != 'hard':
+                    bracketText = f"({(startRoll2-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
+                    bracketText1 = f"({(rolls2[0]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
+                    bracketText2 = f"({(rolls2[1]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
+                    bracketText3 = f"({(rolls2[2]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
+                else:
+                    bracketText, bracketText1, bracketText2, bracketText3 = '', '', '', ''
+
+
+
                 rollingLabel.configure(text='Rolling')
                 wait()
                 startRoll1Label.configure(text=f'{displayUsername} rolled a {startRoll1}!', text_color='green' if player1Starts else 'red')
-                startRoll2Label.configure(text=f'{displayUsername2} rolled a {startRoll2} {f" ( {startRoll2-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )" if botOrNot and difficulty != 'hard' else ""}!', text_color='green' if not player1Starts else 'red')
-                infoLabel.configure(text=f'{displayUsername} starts!', text_color=('green' if botOrNot else 'yellow'))  #YELLOW KINDA NEUTRAL YK
-                rollingLabel.configure(text='')
-                wait(3)
+                startRoll2Label.configure(text=f"{displayUsername2} rolled a {startRoll2} {bracketText}", text_color = 'green' if not player1Starts else 'red')
 
                 startRoll1Label.configure(text='')
                 startRoll2Label.configure(text='')
@@ -295,7 +303,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, '-', '-', '-'], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", '-', '-']])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", '-', '-']])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -303,8 +311,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, '-', '-', '-'], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", '-']])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", '-']])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -312,9 +319,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, '-', '-', '-'], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[2]}{f' ( {rolls2[2]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}"]])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", f"{rolls2[2]} {bracketText3}"]])
                 rollingLabel.configure(text='')
                 wait()
 
@@ -329,7 +334,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], rolls1[1], rolls1[2]], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", '-', '-']])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", '-', '-']])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -337,8 +342,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], rolls1[1], rolls1[2]], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", '-']])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", '-']])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -346,9 +350,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], rolls1[1], rolls1[2]], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[2]}{f' ( {rolls2[2]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}"]])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", f"{rolls2[2]} {bracketText3}"]])
                 rollingLabel.configure(text='')
                 wait()
             else: # OTHER PERSON INSTEAD
@@ -356,9 +358,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], '-', '-'], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[2]}{f' ( {rolls2[2]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}"]])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", f"{rolls2[2]} {bracketText3}"]])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -366,9 +366,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], rolls1[1], '-'], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[2]}{f' ( {rolls2[2]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}"]])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", f"{rolls2[2]} {bracketText3}"]])
                 rollingLabel.configure(text='')
                 wait()
                 
@@ -376,9 +374,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 wait()
                 rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], 
                     [displayUsername, rolls1[0], rolls1[1], rolls1[2]], 
-                    [displayUsername2, f"{rolls2[0]}{f' ( {rolls2[0]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[1]}{f' ( {rolls2[1]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}", 
-                    f"{rolls2[2]}{f' ( {rolls2[2]-ad.getDifficultyInt(difficulty)} {'- 2' if difficulty == 'easy' else '- 1' if difficulty == 'medium' else '+ 0' if difficulty == 'hard' else '+ 1'} )' if botOrNot and difficulty != 'hard' else ''}"]])
+                    [displayUsername2, f"{rolls2[0]} {bracketText1}", f"{rolls2[1]} {bracketText2}", f"{rolls2[2]} {bracketText3}"]])
                 rollingLabel.configure(text='')
                 wait()
 

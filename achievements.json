@@ -96,6 +96,14 @@
             "icon": "images/icons/RNGesusHatesYou.png",
             "secret": false
         },
+        "L": {
+            "name": "L",
+            "description": "Lose 1000 games. L",
+            "requirement": 1000,
+            "type" : "losses",
+            "icon": "images/incons/L.png",
+            "secret": false
+        },
         "beginner": {
             "name": "Beginner",
             "description": "Play your first game",

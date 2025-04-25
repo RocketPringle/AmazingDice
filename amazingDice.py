@@ -309,6 +309,16 @@ def getAchievements(username):
         return data['users'][username]['achievements']
     return []
 
+def getDifficultyNumString(difficulty):
+    if difficulty == 'easy':
+        return '- 2'
+    elif difficulty == 'medium':
+        return '- 1'
+    elif difficulty == 'hard':
+        return ''
+    else:
+        return '+ 1'
+
 # MARK: - LOAD ACHIEVEMENTS
 
 def loadAchievements():
