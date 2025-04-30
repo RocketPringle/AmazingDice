@@ -8,9 +8,39 @@ import time # FOR DELAY TO MAKE NOT BAD IG YEEEE
 import random # FOR LOADING PROGRESS BAR
 import keyring # for keyring integration
 
+# MARK: - SHOP
+
+def shop(username):
+    shopWindow = customtkinter.CTk()
+    shopWindow.geometry('850x600')
+    shopWindow.title('Amazing Dice - Shop')
+
+    itemList = ad.getItems()
+
+    itemScrollFrame = customtkinter.CTkScrollableFrame(shopWindow)
+    itemScrollFrame.pack(pady=10)
+
+    for item in itemList:
+        itemFrame = customtkinter.CTkFrame(itemScrollFrame)
+        itemFrame.pack(pady=10)
+
+        itemLabel = customtkinter.CTkLabel(itemScrollFrame, text=item["name"])
+        itemLabel.pack(pady=10)
+
+        itemDescriptionLabel = customtkinter.CTkLabel(itemScrollFrame, text=item["description"])
+        itemDescriptionLabel.pack(pady=5)
+
+        def addToCart(itemName):
+            pass
+
+        cartAddButton = customtkinter.CTkButton(itemScrollFrame, text='+', command=addToCart(item["name"]))
+        cartAddButton.pack(pady=10)
+
+    shopWindow.mainloop()
+
 # MARK: - PASS CHANGE
 
-def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THIS ONE SIMPLE TRICK 😮😮😮😮
+def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THIS ONE SIMPLE TRICK 😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮
 
     changeWindow = customtkinter.CTk() # makeeeeeing the iwndowuiew
     changeWindow.geometry('850x600')
@@ -257,12 +287,14 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 # 7. WAIT FOR 100/1000 MS (depends on fastroll)
                 # 8. DO IT 
 
+                difficultyInt = ad.getDifficultyInt(difficulty)
+
                 # generate bracket texts
                 if botOrNot and difficulty != 'hard':
-                    bracketText = f"({(startRoll2-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
-                    bracketText1 = f"({(rolls2[0]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
-                    bracketText2 = f"({(rolls2[1]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
-                    bracketText3 = f"({(rolls2[2]-ad.getDifficultyInt)} {ad.getDifficultyNumString})"
+                    bracketText = f"({(startRoll2-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # for startroll
+                    bracketText1 = f"({(rolls2[0]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # for first roll
+                    bracketText2 = f"({(rolls2[1]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # senndceom
+                    bracketText3 = f"({(rolls2[2]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})"# thirnd
                 else:
                     bracketText, bracketText1, bracketText2, bracketText3 = '', '', '', ''
 
@@ -416,6 +448,10 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
                 trophyLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
             if username != 'Guest':  # CHECK 4 TGUESS MODE SO NOT EDITING NON EXCISTENT STATS
+                if botOrNot:
+                    userData = ad.getStats(username)
+                    userData["users"][username]["coins"] += 1
+                    userData["users"][username]["stats"]["networth"] += 1
                 ad.checkAchievement(username, 'wins')
                 ad.checkAchievement(username, 'consecutiveWins')
                 userData = ad.loadUsers() # GET DATA
@@ -567,37 +603,20 @@ def bot(username, guestMode, settings):
     accountLabel = customtkinter.CTkLabel(botWindow, text=f'Signed in as: {username if not guestMode else "Guest"}', font=('Arial Bold', 15))  # creates account label
     accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
 
-    def easyPressed():
-        botWindow.destroy()
-        match(True, 'easy', username, 'Bot', guestMode, settings)
-
-    def mediumPressed():
-        botWindow.destroy()
-        match(True, 'medium', username, 'Bot', guestMode, settings)
-
-    def hardPressed():
-        botWindow.destroy()
-        match(True, 'hard', username, 'Bot', guestMode, settings)
-
-    def expertPressed():
-        botWindow.destroy()
-        match(True, 'expert', username, 'Bot', guestMode, settings)   
-
     def backPressed():
         botWindow.destroy()
-        matchWindow(username, guestMode, settings) 
+        matchWindow(username, guestMode, settings)
 
-    easyButton = customtkinter.CTkButton(botWindow, text='Easy', command=easyPressed)
-    easyButton.pack(pady=10)
+    def continuePressed():
+        difficulty = difficultyChose.get()
+        botWindow.destroy()
+        match(True, difficulty, username, 'Bot', guestMode, settings)
 
-    mediumButton = customtkinter.CTkButton(botWindow, text='Medium', command=mediumPressed)
-    mediumButton.pack(pady=10)
+    difficultyChose = customtkinter.CTkComboBox(botWindow, values=['Easy', 'Medium', 'Hard', 'Expert'])
+    difficultyChose.pack(pady=15)
 
-    hardButton = customtkinter.CTkButton(botWindow, text='Hard', command=hardPressed)
-    hardButton.pack(pady=10)
-
-    expertButton = customtkinter.CTkButton(botWindow, text='Expert', command=expertPressed)
-    expertButton.pack(pady=10)
+    continueButton = customtkinter.CTkButton(botWindow, text='Contiunue', command=continuePressed)
+    continueButton.pack(pady=10)
 
     backButton = customtkinter.CTkButton(botWindow, text='Back', command=backPressed)
     backButton.pack(pady=10)
@@ -869,6 +888,10 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
         menuWindow.destroy()  # closes menu window
         home()  # returns to home screen
 
+    def shopPressed():
+        menuWindow.destroy()
+        shop(username)
+
     def settingsPressed(): # U PREESED SETING
         menuWindow.destroy() # BOOM
         settingsWindow(username, guestMode, settings) #OPENM SUITIINGS WITH USERNAME AND GUESTOMODE SO I CAN KEEP IG IDK AA
@@ -878,6 +901,9 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
 
     matchButton = customtkinter.CTkButton(menuWindow, text='Match', command=matchPressed)  # creates match button
     matchButton.pack(pady=10)  # displays match button with padding
+
+    shopButton = customtkinter.CTkButton(menuWindow, text='Shop', command=shopPressed)
+    shopButton.pack(pady=10)
 
     settingsButton = customtkinter.CTkButton(menuWindow, text='Settings', command=settingsPressed)
     settingsButton.pack(pady=10)
@@ -912,7 +938,7 @@ def login(savedUsername, savedPassword):  # defines login window function
         loginWindow.destroy()  # closes login window
         home()  # returns to home screen
 
-    def onEnter(event):  # defines function for enter key press
+    def onEnter():  # defines function for enter key press
         loginPress()  # triggers login button press
 
     def loginPress():  # defines function for login button
@@ -1093,6 +1119,7 @@ def createAccountWindow():  # defines create account window function
 
 # MARK: - HOME
 
+
 def home():  # defines home window function
     homeWindow = customtkinter.CTk()  # creates new window
     homeWindow.geometry('850x600')  # sets window size
@@ -1129,6 +1156,9 @@ def home():  # defines home window function
 
     guestButton = customtkinter.CTkButton(homeWindow, text="Guest Mode", command=guestPressed)  # creates guest mode button
     guestButton.pack(pady=10)  # displays guest mode button with padding
+
+    exitButton = customtkinter.CTkButton(homeWindow, text='Exit', command=exit)
+    exitButton.pack(pady=10)
 
     homeWindow.mainloop()  # starts the window event loop
 

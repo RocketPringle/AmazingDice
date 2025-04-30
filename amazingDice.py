@@ -8,11 +8,22 @@ import hashlib  # imports hashlib module for password hashing
 import amazingDiceGUI as adGUI  # imports GUI module
 import keyring
 
-
+def getItems():
+    pass
 
 # MARK: - FILE STUFF
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))  # changes to scripts directory for file operations (FUTURE ME DOESNT UNDERSTAND WHAT)
+
+def getRewards(difficulty):
+    if difficulty == 'Easy':
+        return 250
+    elif difficulty == 'Medium':
+        return 500
+    elif difficulty == 'Hard':
+        return 750
+    else:
+        return 1000
 
 # MARK: - USER DATA FUNCTIONS
 
