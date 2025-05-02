@@ -8,22 +8,9 @@ import hashlib  # imports hashlib module for password hashing
 import amazingDiceGUI as adGUI  # imports GUI module
 import keyring
 
-def getItems():
-    pass
-
 # MARK: - FILE STUFF
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))  # changes to scripts directory for file operations (FUTURE ME DOESNT UNDERSTAND WHAT)
-
-def getRewards(difficulty):
-    if difficulty == 'Easy':
-        return 250
-    elif difficulty == 'Medium':
-        return 500
-    elif difficulty == 'Hard':
-        return 750
-    else:
-        return 1000
 
 # MARK: - USER DATA FUNCTIONS
 
@@ -144,29 +131,31 @@ def addNewUser(username, password):  # defines function to add new user to syste
     
     data['users'][username] = {  # creates new user entry
         "hashedPassword": hashPassword(password),  # stores hashed password
-        "joinDate": time.strftime("%d/%m/%Y"),  # stores join date in UK format
+        "joinDate": time.strftime("%d/%m/%Y"),  # stores join date in basic format
+        "coins": 0,
         "stats": {  # initializes user statistics
+            "netWorth": 0,
             "totalGames": 0,  # total games played
             "wins": 0,  # total wins
             "losses": 0,  # total losses
             "draws": 0,  # total draws
             "vsBot": {  # stats for bot matches
-                "easy": {  # easy difficulty stats
+                "Easy": {  # easy difficulty stats
                     "wins": 0, 
                     "losses": 0, 
                     "draws": 0
                 },
-                "medium": {  # medium difficulty stats
+                "Medium": {  # medium difficulty stats
                     "wins": 0, 
                     "losses": 0, 
                     "draws": 0
                 },
-                "hard": {  # hard difficulty stats
+                "Hard": {  # hard difficulty stats
                     "wins": 0, 
                     "losses": 0, 
                     "draws": 0
                 },
-                "expert": {  # expert difficulty stats
+                "Expert": {  # expert difficulty stats
                     "wins": 0, 
                     "losses": 0, 
                     "draws": 0
@@ -205,7 +194,13 @@ def createAccount(username, password):  # defines function to create new account
     else:
         return False  # returns bad
 
-# MARK: - GET USER STATS
+# MARK: - GET COINS
+
+def getCoins(username):
+    data = loadUsers()
+    return data['users'][username]['coins']
+
+# MARK: - GET STATS
 
 def getStats(username):  # defines function to get user statistics
     data = loadUsers()  # loads user data
@@ -293,14 +288,15 @@ def playRound(size, difficulty):
 # MARK: - DIFFICULTY INT
 
 def getDifficultyInt(difficulty):  # defines function to convert difficulty int to string
-    if difficulty == 'easy':
-        return -2
-    elif difficulty == 'medium':
+    # ok hi i changed the difficulty yay but i dont care that its not an int ima keep the name haahahahahahha get bozod mr scott
+    if difficulty == 'Easy':
         return -1
-    elif difficulty == 'hard':
+    elif difficulty == 'Medium':
+        return -0.5
+    elif difficulty == 'Hard':
         return 0
     else:
-        return +1  
+        return 0.5
 
 # MARK: - START FUNCTION
 
@@ -321,14 +317,14 @@ def getAchievements(username):
     return []
 
 def getDifficultyNumString(difficulty):
-    if difficulty == 'easy':
-        return '- 2'
-    elif difficulty == 'medium':
+    if difficulty == 'Easy':
         return '- 1'
-    elif difficulty == 'hard':
+    elif difficulty == 'Medium':
+        return '- 0.5'
+    elif difficulty == 'Hard':
         return ''
     else:
-        return '+ 1'
+        return '+ 0.5'
 
 # MARK: - LOAD ACHIEVEMENTS
 

@@ -15,6 +15,10 @@
         "Guest": {
             "fastRoll": false,
             "theme": "light"
+        },
+        "aaa": {
+            "theme": "dark",
+            "fastRoll": true
         }
     }
 }

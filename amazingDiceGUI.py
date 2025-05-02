@@ -8,39 +8,47 @@ import time # FOR DELAY TO MAKE NOT BAD IG YEEEE
 import random # FOR LOADING PROGRESS BAR
 import keyring # for keyring integration
 
-# MARK: - SHOP
+# MARK - SHOP
 
-def shop(username):
+def shop(username, guestMode, settings): # unfinished so mostly not tagged or accesible and does absolutely nothing lmao
     shopWindow = customtkinter.CTk()
     shopWindow.geometry('850x600')
     shopWindow.title('Amazing Dice - Shop')
 
-    itemList = ad.getItems()
+    titleLabel = customtkinter.CTkLabel(shopWindow, text='Shop', font=('Arial Bold', 20)) # TITLE
+    titleLabel.pack(pady=20)
 
-    itemScrollFrame = customtkinter.CTkScrollableFrame(shopWindow)
-    itemScrollFrame.pack(pady=10)
+    coins = ad.getCoins(username)
 
-    for item in itemList:
-        itemFrame = customtkinter.CTkFrame(itemScrollFrame)
-        itemFrame.pack(pady=10)
+    coinsLabel = customtkinter.CTkLabel(shopWindow, text=f"Coins: {coins}")
+    coinsLabel.place(relx=0.95, rely=0.07, anchor='ne')  # positions account label in top right
 
-        itemLabel = customtkinter.CTkLabel(itemScrollFrame, text=item["name"])
-        itemLabel.pack(pady=10)
+    accountLabel = customtkinter.CTkLabel(shopWindow, text=f'Signed in as: {username if not guestMode else "Guest"}', font=('Arial Bold', 15))  # creates account label
+    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
 
-        itemDescriptionLabel = customtkinter.CTkLabel(itemScrollFrame, text=item["description"])
-        itemDescriptionLabel.pack(pady=5)
+    infoLabel = customtkinter.CTkLabel(shopWindow, text='go away aaaaa') # info label my beloved
+    infoLabel.pack(pady=10)
 
-        def addToCart(itemName):
-            pass
+    customtkinter.CTk
 
-        cartAddButton = customtkinter.CTkButton(itemScrollFrame, text='+', command=addToCart(item["name"]))
-        cartAddButton.pack(pady=10)
+    errorCounters = {
+        
+    }
+    
+    def backPressed():
+        shopWindow.destroy()
+        menu(guestMode, username, settings)
+
+    
+
+    backButton = customtkinter.CTkButton(shopWindow, text='Back', command=backPressed)
+    backButton.pack(pady=10)
 
     shopWindow.mainloop()
 
 # MARK: - PASS CHANGE
 
-def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THIS ONE SIMPLE TRICK 😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮😮
+def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THIS ONE SIMPLE TRICK 😮😮😮😮😮
 
     changeWindow = customtkinter.CTk() # makeeeeeing the iwndowuiew
     changeWindow.geometry('850x600')
@@ -52,11 +60,15 @@ def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THI
     accountLabel = customtkinter.CTkLabel(changeWindow, text=f'Signed in as: {username if not guestMode else "Guest"}', font=('Arial Bold', 15))  # creates account label
     accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
 
+    coins = ad.getCoins(username) #GET COUJNTS FOR NO RESAON THE SHOP DOESNT EXIST :SOB:'
+
+    coinsLabel = customtkinter.CTkLabel(changeWindow, text=f"Coins: {coins}")
+    coinsLabel.place(relx=0.95, rely=0.07, anchor='ne')  # positions account label in top right
+
     infoLabel = customtkinter.CTkLabel(changeWindow, text='') # i love info label my beloved
     infoLabel.pack(pady=10)
     
-    # Error counters for different types of errors
-    errorCounters = {
+    errorCounters = { # LOIKE A MILLION DIFERENBT ERROR DOUNBTERS
         "wrongPassword": 0,
         "passwordsMismatch": 0,
         "passwordRequirements": 0,
@@ -104,10 +116,10 @@ def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THI
     newPassField2.pack(pady=10)  # displays another one ig so u do it right yk
     newPassField2.bind('<Return>', changePressed)  # binds enter key to change function
 
-    changeButton = customtkinter.CTkButton(changeWindow, text='Update Password', command=changePressed)
+    changeButton = customtkinter.CTkButton(changeWindow, text='Update Password', command=changePressed) # CHANGE PASSWORD BUTTON
     changeButton.pack(pady=10)
 
-    backButton = customtkinter.CTkButton(changeWindow, text='Back', command=backPressed)
+    backButton = customtkinter.CTkButton(changeWindow, text='Back', command=backPressed) # BACK BUTTON
     backButton.pack(pady=10)
 
     changeWindow.mainloop()
@@ -116,7 +128,7 @@ def passwordChange(username, guestMode, settings): # CHANGE UR PASSWORD WITH THI
 
 def settingsWindow(username, guestMode, settings):
 
-    global fastRoll
+    global fastRoll # mkaes fatst roll a globalt variab le so it doesnt make a new one upo and actualyl works yaya
     settingsWindow = customtkinter.CTk() # WINDOW STUFFFFF
     settingsWindow.geometry('850x600')
     settingsWindow.title('Amazing Dice - Settings')
@@ -132,18 +144,17 @@ def settingsWindow(username, guestMode, settings):
     infoLabel = customtkinter.CTkLabel(settingsWindow, text='')
     infoLabel.pack(pady=10)
     
-    # Error counters
-    errorCounters = {
+    errorCounters = { # error counter
         "guestPasswordChange": 0
     }
 
-    print(f"fastRoll on open: {fastRoll}")
+    print(f"fastRoll on open: {fastRoll}") # DEBUG
 
     def fastRollPressed():
 
-        global fastRoll
+        global fastRoll # MORE GLOAOBL VARIABLE YAY I DONT ACTUALLY NEED THIS I THINK BC OF SAVING SETTINGS BUT IDK MB FAMALAM
 
-        print(f"fastRoll on press: {fastRoll}")
+        print(f"fastRoll on press: {fastRoll}") # DEBUG
 
         if  not fastRoll:  # if normal coloUr (I WANT THE U BACK)
             print('made green (on)') # debuggg
@@ -197,28 +208,28 @@ def settingsWindow(username, guestMode, settings):
         themeCheckbox.select()
     themeCheckbox.pack(side="right") # PUT ON RIGHT
 
-    backButton = customtkinter.CTkButton(settingsWindow, text='Back', command=backPressed)
-    backButton.pack(pady=10)
+    backButton = customtkinter.CTkButton(settingsWindow, text='Back', command=backPressed) # M,AKE BACK BUTTON
+    backButton.pack(pady=10) 
 
     settingsWindow.mainloop() 
 
 # MARK: - MATCH
 
-def match(botOrNot, difficulty, username, username2, guestMode, settings): # botOrNot is the best var name ever
+def match(botOrNot, difficulty, username, username2, guestMode, settings): # botOrNot is the best var name ever ( also i hate ts code vro fr )
     gameWindow = customtkinter.CTk() # WINDOW
     gameWindow.geometry('850x600')
     gameWindow.title('Amazing dice - Match')
 
-    trophyImage = Image.open("images/trophy.png")
+    trophyImage = Image.open("images/trophy.png") # make treophy imaghe
     trophy = customtkinter.CTkImage(trophyImage, size=(150, 150))
 
-    sobImage = Image.open("images/sob.png")
-    sob = customtkinter.CTkImage(sobImage, size=(150, 150))
+    sobImage = Image.open("images/sob.png") # make sob image
+    sob = customtkinter.CTkImage(sobImage, size=(150, 150)) # more
 
-    fastRoll = settings['fastRoll']
+    fastRoll = settings['fastRoll'] # fast roll
 
-    questionMarkImage = Image.open("images/questionMark.png")
-    questionMark = customtkinter.CTkImage(questionMarkImage, size=(150, 150))
+    questionMarkImage = Image.open("images/questionMark.png") # make question mark image
+    questionMark = customtkinter.CTkImage(questionMarkImage, size=(150, 150)) # more
     
     # Use "Guest" as username if playing as guest
     displayUsername = "Guest" if username == "Guest" else username
@@ -231,7 +242,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
     titleLabel = customtkinter.CTkLabel(gameWindow, text='Match', font=('Arial Bold', 20)) # TITLE
     titleLabel.pack(pady=20)
 
-    roundLabel = customtkinter.CTkLabel(gameWindow, text='Round 1', font=('Arial', 15))
+    roundLabel = customtkinter.CTkLabel(gameWindow, text='Round 1', font=('Arial', 15)) # ROUJND
     roundLabel.pack(pady=5)
 
     rollTable = CTkTable(master=gameWindow, row=3, column=4, values=rollsList) # TABLE MAKE (idk why this is giving me an error without this comment) -> # type: ignore
@@ -240,13 +251,13 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
     infoLabel = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='green')     # TELLS U STUFF LATER WHEN U WIN
     infoLabel.pack(pady=5)
 
-    rollingLabel = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='gray')
+    rollingLabel = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15), text_color='gray') # TELL U U R ROLLING
     rollingLabel.pack(pady=5)
 
-    startRoll1Label = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15))
+    startRoll1Label = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15)) # START ROLL 1 SHOW
     startRoll1Label.pack(pady=5)
 
-    startRoll2Label = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15))
+    startRoll2Label = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15)) # START ROLL 2 SHOW
     startRoll2Label.pack(pady=5)
 
     player1TotalLabel = customtkinter.CTkLabel(gameWindow, text='', font=('Arial', 15)) # TOTAL FOR PLAYER ONE READ THE VAR NAMES BRO OMG
@@ -261,21 +272,43 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
     player2ScoreLabel = customtkinter.CTkLabel(gameWindow, text=f"{displayUsername2}: 0", font=('Arial', 15)) # TOTAL FOR PLAYER 2
     player2ScoreLabel.pack(pady=1)
 
-    def startPressed(): # TERRIBLE CODE DONT LOOK AT THIS
+    def startPressed(): # TERRIBLE CODE DONT LOOK AT THIS 
+
+        startButton.configure(state='disabled', fg_color='gray') # so u cant break my code byu spoamnmming it
 
         playerScore1, playerScore2 = 0, 0 # SET DEFAULT SCORES
         delay = 100 if fastRoll else 1000  # store delay in ms based on fastroll var
 
-        def wait(multiplier=1):
-            gameWindow.update()
-            gameWindow.after(delay*multiplier)
+        def wait(multiplier=1): #MAKE A WAIT THING SO I DONT HAVER TO RIGHT 2 LINES EVERY TIME I WANNA WAIT AND UPODATE ( A LOT ) ALSO TAKES INTO ACCOUNBT FASTROLL AND A MUKLTIPOLIERIIF WAITING IMPORTANT
+            gameWindow.update() # UPDATE THE WINDOW
+            gameWindow.after(delay*multiplier) # WAIT FOR THE DELAY
 
         for i in range(0, 5): # 5 rounds
             infoLabel.configure(text_color='gray') # RESET COLOR
             roundLabel.configure(text=f'Round {i+1}') # UPDATE ROUND LABEL TO SHOW CURRENT ROUND YAYAYA
+            print(ad.getDifficultyInt(difficulty))
+            print(ad.getDifficultyNumString(difficulty))
             rolls1, rolls2, rollTotal1, rollTotal2, player1Starts, startRoll1, startRoll2 = ad.playRound(6,ad.getDifficultyInt(difficulty) if botOrNot else 0)  # rolls 3 times and stores it in a list. gets the roll totals and gets who starts + their starting rolls
             print('rolled (playround)') # DEBUG THINK MEANT TO BE F STRING IDK ITS BEEN AGES SINCE I WROTE THIS (1 MONTH)
+            # generate bracket texts AS I HAD AN ERROR BEFORE BUT TS WASNT THE ISSUE BUT IT MAKES IT NEATER SO IDC
+            if botOrNot and difficulty != 'hard':
+                print('passed if') # DEBUG
+                difficultyInt = ad.getDifficultyInt(difficulty) # get the difficulty int
+                bracketText = f"({(int(startRoll2)-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # make the bracket text with roll and then how got the roll 
+                print(f"bracketText: {bracketText}")
+                bracketText1 = f"({(int(rolls2[0])-difficultyInt)} {ad.getDifficultyNumString(difficulty)})"
+                print(f"bracketText1: {bracketText1}")
+                bracketText2 = f"({(int(rolls2[1])-difficultyInt)} {ad.getDifficultyNumString(difficulty)})"
+                print(f"bracketText2: {bracketText2}")
+                bracketText3 = f"({(int(rolls2[2])-difficultyInt)} {ad.getDifficultyNumString(difficulty)})"
+                print(f"bracketText3: {bracketText3}")
+            else:
+                print('failed if') # DEBUG
+                bracketText, bracketText1, bracketText2, bracketText3 = '', '', '', '' # make the bracket text empty
             if player1Starts: # DO A LONG ROLLING SEQUENCE THATS ACUTALLY FAKE AS I ROLL THEM AT START AND JUST PRETENT TO DO THAT NOW BECAUSE THE BRIEF IS WEIRD LIKE WHY DOES IT MATTER WHO GOES FIRST ITS JUST GAMBLING AAAAAAA
+
+                # AAAAAAA YOU HAVE A 98% CHGANCE OIF LOSING TO THE HARD BOT A AAAAASGFDFSATYSDFY98P7STGF YIUSUF I HAVE TO CGANGE IT ALLLLLL THE EASY BOT LOSES 0.0001% OF THE TIME AAAAAA WHYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY I HATE MATHS NOWWW
+                # ( I NERFED/BUFFED THEM )
 
                 # ACTUAL EXPLANATION:
                 # 1. ROLLING LABEL IS SET TO ROLLING
@@ -285,18 +318,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 # 5. INFO LABEL IS SET TO THE START ROLL 1
                 # 6. ROLLING LABEL IS SET TO ""
                 # 7. WAIT FOR 100/1000 MS (depends on fastroll)
-                # 8. DO IT 
-
-                difficultyInt = ad.getDifficultyInt(difficulty)
-
-                # generate bracket texts
-                if botOrNot and difficulty != 'hard':
-                    bracketText = f"({(startRoll2-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # for startroll
-                    bracketText1 = f"({(rolls2[0]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # for first roll
-                    bracketText2 = f"({(rolls2[1]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})" # senndceom
-                    bracketText3 = f"({(rolls2[2]-difficultyInt)} {ad.getDifficultyNumString(difficulty)})"# thirnd
-                else:
-                    bracketText, bracketText1, bracketText2, bracketText3 = '', '', '', ''
+                # 8. DO IT MORE SORRY I DIDNT TAG IT ALL ITS THE DAY BEFORE THE DUE DATE AND I HAVE NO TIMEEEE
 
 
 
@@ -438,20 +460,31 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
             rollTable.configure(values=[['','Roll 1', 'Roll 2', 'Roll3'], [displayUsername, '-', '-', '-'], [displayUsername2, '-', '-', '-']])
             wait(3)
 
+# MARK: - WIN
+
         if playerScore2 < playerScore1: # IF YOU WON OVERALL
             if botOrNot: # YOU WON VS BOT
+                ##if difficulty == 'Easy': tagged as shop not exist rn and ts didnt even work xd
+                #    winReward = 500
+                #elif difficulty == 'Medium':
+                #    winReward = 750
+                #elif difficulty == 'Hard':
+                #    winReward = 1000
+                #elif difficulty == 'Expert':
+                #    winReward = 1500
                 infoLabel.configure(text='YOU WIN!', text_color='green', font=('Arial Bold', 25)) # TERLL U
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
                 trophyLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
+                #rewardLabel = customtkinter.CTkLabel(gameWindow, text=f"Reward: {winReward}", font=('Arial Bold', 15))
+                #ewardLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
             else: # YOU WON VS PLAYER
+                #winReward = 500
                 infoLabel.configure(text=f'{displayUsername2} WON!', text_color='green', font=('Arial Bold', 25)) # TERLL U
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
                 trophyLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
+                #rewardLabel = customtkinter.CTkLabel(gameWindow, text=f"Reward: {winReward}", font=('Arial Bold', 15))
+                #rewardLabel.place(relx=0.5, rely=0.8, anchor="center")  # put below info label # MOVE TJHE LAVBEL DOPWNNNNNNNNNNNNNNN
             if username != 'Guest':  # CHECK 4 TGUESS MODE SO NOT EDITING NON EXCISTENT STATS
-                if botOrNot:
-                    userData = ad.getStats(username)
-                    userData["users"][username]["coins"] += 1
-                    userData["users"][username]["stats"]["networth"] += 1
                 ad.checkAchievement(username, 'wins')
                 ad.checkAchievement(username, 'consecutiveWins')
                 userData = ad.loadUsers() # GET DATA
@@ -459,11 +492,19 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 userData['users'][username]['stats']['wins'] += 1 # MORE EDIT
                 if username2 == 'Bot': # EDIT WINS FOR BOTS 
                     userData['users'][username]['stats']['vsBot'][difficulty]['wins'] += 1 # ACUTALLY EDIT
+                    #userData['users'][username]['stats']['netWorth'] += winReward
+                    #userData['users'][username]['coins'] += winReward
                 else:
                     userData['users'][username]['stats']['vsPlayer']['wins'] += 1 # YOU WON AND SAVE IT YAYAYAYAYAYAYA
                     userData['users'][username2]['stats']['totalGames'] += 1 # OTHER LOST SAVE IT TOO
                     userData['users'][username2]['stats']['losses'] += 1   
+                    #userData['users'][username2]['coins'] += winReward
+                    #userData['users'][username]['stats']['netWorth'] += winReward
+                    #userData['users'][username]['coins'] += winReward
+                    #userData['users'][username2]['coins'] -= winReward
                 ad.saveUsers(userData) # ACTUAKLY SAFE THE DATA
+
+# MARK: - LOSE
 
         elif playerScore2 > playerScore1: #OTHER DUDE WON
             infoLabel.configure(text=f"{'YOU LOSE' if botOrNot else displayUsername2} {'WON' if not botOrNot else ''}!", text_color=('red' if botOrNot else 'green'), font=('Arial Bold', 25)) # IF VS BOT CALLS U A LOSER ELSE JS SAYS WHO WON
@@ -485,6 +526,8 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                     userData['users'][username2]['stats']['wins'] += 1 # OTHER WON SAVE IT TOO YAYAYAYA
                 ad.saveUsers(userData)
 
+# MARK: - DRAW
+
         else: # if draw which legit ISNT POSSIBLE THERS 5 ROUNDS IM DUMB BUT I DONT CARE ENOUGH TO DELETE THIS ENJOY USELESS CODE RIPPPP
             infoLabel.configure(text='HOW DID YOU DRAW?!', text_color='red', font=('Arial Bold', 25)) # TELLSYU YOPU TDRAEW WITH TYELLOW BC DRAWK IS YELLLOW AAAA
             questionMarkLabel = customtkinter.CTkLabel(gameWindow, text="", image=questionMark) # create a question mark label
@@ -499,14 +542,14 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                     userData['users'][username]['stats']['vsPlayer']['draws'] += 1
                 ad.saveUsers(userData) # DONE AND SAVED 
 
-    def backPressed():
-        gameWindow.destroy()
-        matchWindow(username, guestMode, settings)
+    def backPressed(): # BACK BUTTON
+        gameWindow.destroy() # CLOSE THE GAME WINDOW
+        matchWindow(username, guestMode, settings) # GO BACK TO THE MATCH WINDOW
 
-    startButton = customtkinter.CTkButton(gameWindow, text='Start', font=('Arial', 15), command=startPressed)
-    startButton.pack(pady=10)
+    startButton = customtkinter.CTkButton(gameWindow, text='Start', font=('Arial', 15), command=startPressed, state='enabled') # START BUTTON
+    startButton.pack(pady=10) # MAKE IT
 
-    backButton = customtkinter.CTkButton(gameWindow, text='Back', font=('Arial', 15), command=backPressed)
+    backButton = customtkinter.CTkButton(gameWindow, text='Back', font=('Arial', 15), command=backPressed) # BACK BUTTON
     backButton.pack(pady=10)
 
     gameWindow.mainloop()      
@@ -514,14 +557,14 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
 # MARK: - PVP
 
 def pvp(username, settings):
-    pvpWindow = customtkinter.CTk()
-    pvpWindow.geometry('850x600')
-    pvpWindow.title('Amazing dice - VS Person')
+    pvpWindow = customtkinter.CTk() # make the window
+    pvpWindow.geometry('850x600') # set the size
+    pvpWindow.title('Amazing dice - VS Person') # set the title
 
-    titleLabel = customtkinter.CTkLabel(pvpWindow, text='Player vs Player', font=('Arial Bold', 30))
+    titleLabel = customtkinter.CTkLabel(pvpWindow, text='Player vs Player', font=('Arial Bold', 30)) # make title label
     titleLabel.pack(pady=10)
 
-    infoLabel = customtkinter.CTkLabel(pvpWindow, text='Enter username of person you want to play against:', font=('Arial Bold', 15))
+    infoLabel = customtkinter.CTkLabel(pvpWindow, text='Enter username of person you want to play against:', font=('Arial Bold', 15)) # make info label (my beloved)
     infoLabel.pack(pady=10)
 
     progressFrame = customtkinter.CTkFrame(pvpWindow, fg_color="transparent", width=1, height=1) # make frame for progress bar to be in (js above buttons so it doesnt default to bottom)      fg color transparent so it doesnt show as its ugly and small so not move other stuff out of way
@@ -529,96 +572,95 @@ def pvp(username, settings):
 
     accountLabel = customtkinter.CTkLabel(pvpWindow, text=f'Signed in as: {username}', font=('Arial Bold', 15))  # creates account label
     accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
-    
-    # Error counters
-    errorCounters = {
+
+    errorCounters = { # counts hgow many mistakjes stupoid player made lmao
         "emptyFields": 0,
         "selfPlay": 0,
         "invalidCredentials": 0
     }
 
-    def backPressed():
-        pvpWindow.destroy()
-        matchWindow(username, False, settings)
+    def backPressed(): # u press ack
+        pvpWindow.destroy() # close the pvp window
+        matchWindow(username, False, settings) # go back to de match window
 
-    def startPressed():
-        if usernameField.get() == '' or passwordField.get() == '':
-            errorCounters["emptyFields"] += 1
-            infoLabel.configure(text=f'Please fill in all fields! ({errorCounters["emptyFields"]})', text_color='red')
-        elif usernameField.get() == username:
-            errorCounters["selfPlay"] += 1
-            infoLabel.configure(text=f'You cannot play against yourself! ({errorCounters["selfPlay"]})', text_color='red')
-        elif ad.checkPassword(usernameField.get(), passwordField.get()):
-            infoLabel.configure(text='Successfully logged in!', text_color='green')
+    def startPressed(event=None): # u press start event is bc pressing enter need one ig so js makes it nothing 
+        if usernameField.get() == '' or passwordField.get() == '': # if the username or password is empty
+            errorCounters["emptyFields"] += 1 # add 1 to the empty fields counter
+            infoLabel.configure(text=f'Please fill in all fields! ({errorCounters["emptyFields"]})', text_color='red') # tell the user to fill in all fields
+        elif usernameField.get() == username: # if the username is the same as the current username ( dumbo )
+            errorCounters["selfPlay"] += 1 # add 1 to the self play counter
+            infoLabel.configure(text=f'You cannot play against yourself! ({errorCounters["selfPlay"]})', text_color='red') # tell the user they cant play against themselves ( dumbo )
+        elif ad.checkPassword(usernameField.get(), passwordField.get()): # if the password is correct
+            infoLabel.configure(text='Successfully logged in!', text_color='green') # tell the user they logged in successfully yayaaaaaa
             
-            # Create loading progress bar
-            progressbar = customtkinter.CTkProgressBar(progressFrame, width=300)
+            progressbar = customtkinter.CTkProgressBar(progressFrame, width=300) # make progress bar
             progressbar.pack(pady=10)
             
-            # Show loading message
-            infoLabel.configure(text='Loading into match...', text_color='green')
+            infoLabel.configure(text='Loading into match...', text_color='green') # tell the user they are loading into the match
             
-            # Simulate loading for 3-6 seconds
-            loadTime = random.uniform(3, 6) # random load time
+            loadTime = random.uniform(0.5, 3) # random load time as a float
             steps = 200 # steps for the progress bar (200 for decent detail)
             for i in range(steps + 1): # loops through the steps
                 progressbar.set(i/steps) # sets the progress bar to the current step
                 pvpWindow.update() # updates the window (progress bar needs to be updated to show bc ctkinter is dumb)
                 time.sleep(loadTime/steps) # waits based on the steps to make equal amouint of time for each step
             
-            username = usernameField.get()
+            opponentUsername = usernameField.get() # get the opponent username
 
             pvpWindow.destroy() # closes the pvp window
-            match(False, 0, username, username, False, settings) # starts the match with both users usernames, false bc not bot (duh)
+            match(False, 0, username, opponentUsername, False, settings) # starts the match with both users usernames, false bc not bot (duh)
         else:
-            errorCounters["invalidCredentials"] += 1
-            infoLabel.configure(text=f'Invalid username or password ({errorCounters["invalidCredentials"]})', text_color='red')
+            errorCounters["invalidCredentials"] += 1 # add 1 to the invalid credentials counter
+            infoLabel.configure(text=f'Invalid username or password ({errorCounters["invalidCredentials"]})', text_color='red') # tell the user they have invalid credentials ( bozo )
 
     usernameField = customtkinter.CTkEntry(pvpWindow, placeholder_text='Username', width=200, height=30)
-    usernameField.pack(pady=10)
-    usernameField.bind('<Return>', lambda event: startPressed())
+    usernameField.pack(pady=10) # make field for username
+    usernameField.bind('<Return>', startPressed) # bind the enter key to the startPressed function
 
     passwordField = customtkinter.CTkEntry(pvpWindow, placeholder_text='Password', width=200, height=30)
     passwordField.pack(pady=10)
-    passwordField.bind('<Return>', lambda event: startPressed())
+    passwordField.bind('<Return>', startPressed) # bind the enrtr key to the startPressed function
 
     startButton = customtkinter.CTkButton(pvpWindow, text='Start', command=startPressed)
-    startButton.pack(pady=10)
+    startButton.pack(pady=10) # make button for start
 
     backButton = customtkinter.CTkButton(pvpWindow, text='Back', command=backPressed)
-    backButton.pack(pady=10)
+    backButton.pack(pady=10) # make button for back
 
     pvpWindow.mainloop()
 
 # MARK: - BOT
 
 def bot(username, guestMode, settings):
-    botWindow = customtkinter.CTk()
-    botWindow.geometry('850x600')
-    botWindow.title('Amazing Dice - VS Bot')
+    botWindow = customtkinter.CTk() # make the window
+    botWindow.geometry('850x600') # set the size
+    botWindow.title('Amazing Dice - VS Bot') # set the title
 
-    titleLabel = customtkinter.CTkLabel(botWindow, text='Choose bot difficulty!', font=('Arial Bold', 30))
+    titleLabel = customtkinter.CTkLabel(botWindow, text='Choose bot difficulty!', font=('Arial Bold', 30)) # nmake s titkle lavel
     titleLabel.pack(pady=10)
 
     accountLabel = customtkinter.CTkLabel(botWindow, text=f'Signed in as: {username if not guestMode else "Guest"}', font=('Arial Bold', 15))  # creates account label
-    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
+    accountLabel.place(relx=0.95, rely=0.02, anchor='ne') 
+
+    infoLabel = customtkinter.CTkLabel(botWindow, text='', font=('Arial Bold', 15))  # info label my beloved (ts so fire)
+    infoLabel.pack(pady=10)
+
+    def continuePressed(): # if u pressed continue
+        difficulty = difficultyBox.get() # get the difficulty (before so the difficultyBox actually exists)
+        botWindow.destroy() # close the bot window
+        match(True, difficulty, username, 'Bot', guestMode, settings) # start the match
 
     def backPressed():
         botWindow.destroy()
-        matchWindow(username, guestMode, settings)
+        matchWindow(username, guestMode, settings) 
 
-    def continuePressed():
-        difficulty = difficultyChose.get()
-        botWindow.destroy()
-        match(True, difficulty, username, 'Bot', guestMode, settings)
+    difficultyBox = customtkinter.CTkComboBox(botWindow, values=['Easy', 'Medium', 'Hard', 'Expert']) # makes a dropdown for the difficulty I DIDS IT AYAYA
+    difficultyBox.pack(pady=10)
 
-    difficultyChose = customtkinter.CTkComboBox(botWindow, values=['Easy', 'Medium', 'Hard', 'Expert'])
-    difficultyChose.pack(pady=15)
-
-    continueButton = customtkinter.CTkButton(botWindow, text='Contiunue', command=continuePressed)
+    continueButton = customtkinter.CTkButton(botWindow, text='Continue', command=continuePressed) # copntinu so u can actually start it
     continueButton.pack(pady=10)
 
-    backButton = customtkinter.CTkButton(botWindow, text='Back', command=backPressed)
+    backButton = customtkinter.CTkButton(botWindow, text='Back', command=backPressed) # back button 
     backButton.pack(pady=10)
 
     botWindow.mainloop()
@@ -639,8 +681,7 @@ def matchWindow(username, guestMode, settings):  # defines match window function
     messageLabel = customtkinter.CTkLabel(matchWindow, text="", text_color="red")  # creates empty error message label in red
     messageLabel.pack(pady=10)  # adds padding and displays message label
     
-    # Error counters
-    errorCounters = {
+    errorCounters = { # countrs how many rtimes the error happens to show the ppl so they get like feedba\CK ON their epresses
         "guestPvp": 0
     }
 
@@ -657,7 +698,7 @@ def matchWindow(username, guestMode, settings):  # defines match window function
             messageLabel.configure(text=f'Guests can only play against bots, make an account for more features! ({errorCounters["guestPvp"]})') # HAHA BAD UR A GUEST GHAHAA
 
     def botPressed():
-        matchWindow.destroy() # make dropdown later w/ difficulties <- REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS 
+        matchWindow.destroy() # make dropdown later w/ difficulties <- REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS REMMEBR THIS  I DID IT UYAYAAAAYAYA
         bot(username, guestMode, settings)
 
     botButton = customtkinter.CTkButton(matchWindow, text='VS Bot', command=botPressed) # BUTTON 4 FBOT MODE
@@ -673,19 +714,21 @@ def matchWindow(username, guestMode, settings):  # defines match window function
 
 # MARK: - STAT WINDOW
 
-def statsWindow(stats, username, settings):  # defines stats window function that takes stats dictionary and username
+def viewStatsWindow(stats, username, settings):  # defines stats window function that takes stats dictionary and username
     statsWindow = customtkinter.CTk()  # creates new window
     statsWindow.geometry('850x600')  # sets window size
     statsWindow.title('Amazing Dice - Stats')  # sets window title
 
+    #coinImage = customtkinter.CTkImage(light_image=Image.open('images/icons/coinIcon.png'), dark_image=Image.open('images/icons/coinIcon.png'), size=(20, 20)) # make coin image
+
     titleLabel = customtkinter.CTkLabel(statsWindow, text=f"Stats for {username}", font=('Arial Bold', 30))  # creates title with username
-    titleLabel.pack(pady=10)  # displays title with padding
+    titleLabel.pack(pady=10) 
 
     accountLabel = customtkinter.CTkLabel(statsWindow, text=f'Signed in as: {username}', font=('Arial Bold', 15))  # creates account label
-    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
+    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # put in corner
 
-    scrollFrame = customtkinter.CTkScrollableFrame(statsWindow, width=500, height=400)  # creates scrollable frame for stats
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)  # positions scrollable frame
+    scrollFrame = customtkinter.CTkScrollableFrame(statsWindow, width=500, height=400)  # creates scrollable frame for showinm g stats ( doesnt rlly need to be screollable as theres not enoguht but just incase ig)
+    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)
 
     totalGamesLabel = customtkinter.CTkLabel(scrollFrame, text=f"Total Games: {stats['totalGames']}", font=('Arial Bold', 15))  # shows total games played
     totalGamesLabel.pack(pady=10)  # displays total games with padding
@@ -693,10 +736,16 @@ def statsWindow(stats, username, settings):  # defines stats window function tha
     overallLabel = customtkinter.CTkLabel(scrollFrame, text=f"Overall: {stats['wins']} Wins, {stats['losses']} Losses, {stats['draws']} Draws", font=('Arial Bold', 15))  # shows overall stats
     overallLabel.pack(pady=10)  # displays overall stats with padding
 
+    #coinIconLabel = customtkinter.CTkLabel(scrollFrame, image=coinImage, text="") # make label for icon nuh uh ts gone now L
+    #coinIconLabel.place(relx=0.572, rely=0.247) # put in rlly specific place as i didnt knkw how to put next to the label
+
+    netWorthLabel = customtkinter.CTkLabel(scrollFrame, text=f"Net Worth: {stats['netWorth']}", font=('Arial Bold', 15))  # shows net worth from stats
+    netWorthLabel.pack(pady=10)  
+
     vsBotLabel = customtkinter.CTkLabel(scrollFrame, text="Vs Bot", font=('Arial Bold', 20))  # creates bot section header
     vsBotLabel.pack(pady=10)  # displays bot header with padding
 
-    for difficulty in ['easy', 'medium', 'hard', 'expert']:  # loops through each difficulty level
+    for difficulty in ['Easy', 'Medium', 'Hard', 'Expert']:  # loops through each difficulty level
         botStats = stats['vsBot'][difficulty]  # gets stats for current difficulty
         botLabel = customtkinter.CTkLabel(scrollFrame, text=f"{difficulty.capitalize()}: {botStats['wins']} Wins, {botStats['losses']} Losses, {botStats['draws']} Draws", font=('Arial', 15))  # creates label for difficulty stats
         botLabel.pack(pady=5)  # displays difficulty stats with padding
@@ -708,15 +757,15 @@ def statsWindow(stats, username, settings):  # defines stats window function tha
     playerStatsLabel = customtkinter.CTkLabel(scrollFrame, text=f"Wins: {vsPlayerStats['wins']}, Losses: {vsPlayerStats['losses']}, Draws: {vsPlayerStats['draws']}", font=('Arial', 15))  # creates label for player stats
     playerStatsLabel.pack(pady=5)  # displays player stats with padding
 
-    def achievementsPressed():
-        statsWindow.destroy()
-        achievementsWindow(username, settings)
+    def achievementsPressed(): # if u pressed achievements button
+        statsWindow.destroy() # close stats window
+        achievementsWindow(username, settings) # open achievements window
 
     def backPressed():  # defines function for back button
         statsWindow.destroy()  # closes stats window
         menu(False, username, settings)  # returns to menu
 
-    achievementsButton = customtkinter.CTkButton(statsWindow, text='Achievements', command=achievementsPressed)
+    achievementsButton = customtkinter.CTkButton(statsWindow, text='Achievements', command=achievementsPressed) # make button for achievements
     achievementsButton.pack(pady=10)
 
     backButton = customtkinter.CTkButton(statsWindow, text='Back', command=backPressed)  # creates back button
@@ -732,113 +781,93 @@ def achievementsWindow(username, settings):
     achievementsWindow.title('Amazing Dice - Achievements')  # sets window title
 
     titleLabel = customtkinter.CTkLabel(achievementsWindow, text=f"Achievements for {username}", font=('Arial Bold', 30))  # creates title with username
-    titleLabel.pack(pady=10)  # displays title with padding
+    titleLabel.pack(pady=10)  # actuaklky display
 
     accountLabel = customtkinter.CTkLabel(achievementsWindow, text=f'Signed in as: {username}', font=('Arial Bold', 15))  # creates account label
-    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # positions account label in top right
+    accountLabel.place(relx=0.95, rely=0.02, anchor='ne')  # put in corner (top right)
 
-    # Get achievements data
-    achievements = ad.getAchievements(username)
-    allAchievements = ad.loadAchievements()['achievements'] # loads achievements bit of achievements file bit dumb that i need [achievements]
-    totalAchievements = len(allAchievements)
-    unlockedAchievements = len(achievements)
+    achievements = ad.getAchievements(username) # get achievements data
+    allAchievements = ad.loadAchievements()['achievements'] # loads achievements bit of achievements file bit dumb that i need [achievements] imo
+    totalAchievements = len(allAchievements) # get total achievements using len of list
+    unlockedAchievements = len(achievements) # get unlocked achievements using same method
 
-    # Create progress frame
-    progressFrame = customtkinter.CTkFrame(achievementsWindow)
-    progressFrame.pack(pady=10, padx=20, fill="x")
+    progressFrame = customtkinter.CTkFrame(achievementsWindow) # make progress frame
+    progressFrame.pack(pady=10, padx=20, fill="x") 
 
-    # Show achievement count
-    achievementCountLabel = customtkinter.CTkLabel(progressFrame, text=f"Unlocked: {unlockedAchievements}/{totalAchievements}", font=('Arial Bold', 15))
+    achievementCountLabel = customtkinter.CTkLabel(progressFrame, text=f"Unlocked: {unlockedAchievements}/{totalAchievements}", font=('Arial Bold', 15)) # show unlocked vs total
     achievementCountLabel.pack(pady=10)
 
-    # Create progress bar
-    progressBar = customtkinter.CTkProgressBar(progressFrame, width=400)
+    progressBar = customtkinter.CTkProgressBar(progressFrame, width=400) # make progress bar
     progressBar.pack(pady=5)
     
-    # Set progress percentage
-    progressValue = unlockedAchievements / totalAchievements if totalAchievements > 0 else 0
-    progressBar.set(progressValue)
+    progressValue = unlockedAchievements / totalAchievements
+    progressBar.set(progressValue) # set progress bar to the progress value
 
-    # Create scrollable frame for achievements
     scrollFrame = customtkinter.CTkScrollableFrame(achievementsWindow, width=600, height=350)
-    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True)
+    scrollFrame.pack(pady=10, padx=20, fill="both", expand=True) # make scroillable frame for unlocked achievements
 
-    # Display unlocked achievements first
     achievementsLabel = customtkinter.CTkLabel(scrollFrame, text="Unlocked Achievements", font=('Arial Bold', 18))
-    achievementsLabel.pack(pady=10)
+    achievementsLabel.pack(pady=10) # make label to shgow unlocked achievements
 
     for achievement in achievements:
         # Create frame with darker background for visibility
         achievementFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray85", "gray25"))
-        achievementFrame.pack(pady=5, padx=10, fill="x")
+        achievementFrame.pack(pady=5, padx=10, fill="x") # make frame for achievement
 
         achievementNameLabel = customtkinter.CTkLabel(achievementFrame, text=achievement['name'], font=('Arial Bold', 15))
-        achievementNameLabel.pack(pady=5, padx=10, anchor="w")
+        achievementNameLabel.pack(pady=5, padx=10, anchor="w") # make label for name
 
         achievementDescLabel = customtkinter.CTkLabel(achievementFrame, text=achievement['description'], font=('Arial', 12))
-        achievementDescLabel.pack(pady=5, padx=10, anchor="w")
+        achievementDescLabel.pack(pady=5, padx=10, anchor="w") # make label for description with user achievement data
 
-        dateLabel = customtkinter.CTkLabel(achievementFrame, text=f"Unlocked: {achievement.get('date', 'Unknown date')}", font=('Arial', 10), text_color="gray")
+        dateLabel = customtkinter.CTkLabel(achievementFrame, text=f"Unlocked: {achievement.get('date', 'Unknown date')}", font=('Arial', 10), text_color="gray") # say when they were unlocked
         dateLabel.pack(pady=5, padx=10, anchor="w")
 
-    # Display locked achievements (show as ??? for secret ones)
-    lockedLabel = customtkinter.CTkLabel(scrollFrame, text="Locked Achievements", font=('Arial Bold', 18))
+    lockedLabel = customtkinter.CTkLabel(scrollFrame, text="Locked Achievements", font=('Arial Bold', 18)) # create label to show that achievements below havent been completed
     lockedLabel.pack(pady=10)
 
-    # Create a list of unlocked achievement IDs for easy lookup
-    unlockedIds = [a.get('id', '') for a in achievements]
-    
-    # Get user's progress data
-    userData = ad.loadUsers()
-    userProgress = userData['users'][username]['achievementProgress']
+    unlockedIds = [achievement.get('id', '') for achievement in achievements] # gets the ids of the unlocked achievements
 
-    for achievementId, achievementData in allAchievements.items():
+    userData = ad.loadUsers() # gets data from users file
+    userProgress = userData['users'][username]['achievementProgress'] # gets the achievement progress for the user
+
+    for achievementId, achievementData in allAchievements.items(): # loops through all achievements with the id and the data as the like variables
         if achievementId not in unlockedIds:
-            # Create frame with darker background for locked achievements
-            achievementFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray80", "gray20"))
+            achievementFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray80", "gray20")) # create frame thats slightly darker than scroll frame for nice background
             achievementFrame.pack(pady=5, padx=10, fill="x")
 
-            # Show ??? for secret achievements
-            if achievementData['secret']:
-                nameText = "???"
+            if achievementData['secret']: # if the achievement is a secret achievement
+                nameText = "???" # show ??? for everything
                 descText = "???"
             else:
-                nameText = achievementData['name']
+                nameText = achievementData['name'] # else proper name and description from fetched data
                 descText = achievementData['description']
 
             achievementNameLabel = customtkinter.CTkLabel(achievementFrame, text=nameText, font=('Arial Bold', 15), text_color="gray")
-            achievementNameLabel.pack(pady=5, padx=10, anchor="w")
+            achievementNameLabel.pack(pady=5, padx=10, anchor="w") # make lkabel for name
 
             achievementDescLabel = customtkinter.CTkLabel(achievementFrame, text=descText, font=('Arial', 12), text_color="gray")
-            achievementDescLabel.pack(pady=5, padx=10, anchor="w")
+            achievementDescLabel.pack(pady=5, padx=10, anchor="w") # make label for description
             
-            # Get the current progress for this achievement type
-            achievementType = achievementData['type']
+            achievementType = achievementData['type'] # get the achievement type
             currentProgress = userProgress.get(achievementType, 0) # gets the current progress for this achievement type with 0 as backup (int)
             requirement = achievementData['requirement'] # gets the requirement for this achievement type (int)
             
-            # Calculate progress ratio (capped at 1.0)
-            progressRatio = min(currentProgress / requirement, 1.0)
+            progressDecimal = min(currentProgress / requirement, 1.0) # calculate progrss but maxes at 1.0 with min (tuple as not changed)
             
-            # Progress bar frame to ensure proper positioning
-            #rogressBarFrame = customtkinter.CTkFrame(achievementFrame, fg_color="transparent")
-            #progressBarFrame.place(relx=0.5, rely=0.9, anchor="center")
+            achievementProgressBar = customtkinter.CTkProgressBar(achievementFrame, width=750, height=5) #  creates a progress bar
+            achievementProgressBar.place(relx=0.5, rely=0.9, anchor="center") # places at bottom
+            achievementProgressBar.set(progressDecimal)  # sets value
             
-            # Create the progress bar with fixed width
-            achievementProgressBar = customtkinter.CTkProgressBar(achievementFrame, width=750, height=5)
-            achievementProgressBar.place(relx=0.5, rely=0.9, anchor="center")
-            achievementProgressBar.set(progressRatio)  # Set progress value
-            
-            # Progress label showing current/required values
-            progressLabelText = f"{currentProgress}/{requirement}"
+            progressLabelText = f"{currentProgress}/{requirement}" # makes a label showing progress in numbers
             achievementProgressLabel = customtkinter.CTkLabel(achievementFrame, text=progressLabelText, font=('Arial', 10), text_color="gray")
             achievementProgressLabel.place(relx=0.5, rely=0.9, anchor="center")
 
-    def backPressed():
-        achievementsWindow.destroy()
-        statsWindow(ad.getStats(username), username, settings)
+    def backPressed(): # function if pressed
+        achievementsWindow.destroy() # destroys window
+        viewStatsWindow(ad.getStats(username), username, settings) # opens the stats window by running its function
 
-    backButton = customtkinter.CTkButton(achievementsWindow, text='Back', command=backPressed)
+    backButton = customtkinter.CTkButton(achievementsWindow, text='Back', command=backPressed) # makes and packs back button
     backButton.pack(pady=10)
 
     achievementsWindow.mainloop()
@@ -853,7 +882,7 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
 
     # settings config
 
-    if settings['theme'] == 'dark':
+    if settings['theme'] == 'dark': # get theme and set to it
         customtkinter.set_appearance_mode('dark')
     else:
         customtkinter.set_appearance_mode('light')
@@ -867,15 +896,14 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
     messageLabel = customtkinter.CTkLabel(menuWindow, text="", text_color="red")  # creates error message label
     messageLabel.pack(pady=10)  # displays message label with padding
     
-    # Error counters
-    errorCounters = {
+    errorCounters = {  # stores how many times an error occured to display to user
         "guestStats": 0
     }
 
     def statsPressed():  # defines function for stats button
-        if not guestMode:  # checks if user is not in guest mode
+        if not guestMode:  # checks if user is not in guest mode                
             menuWindow.destroy()  # closes menu window
-            statsWindow(ad.getStats(username), username, settings)  # opens stats window
+            viewStatsWindow(ad.getStats(username), username, settings)  # opens stats window
         else:
             errorCounters["guestStats"] += 1
             messageLabel.configure(text=f"Guest mode does not have stats ({errorCounters['guestStats']})")  # shows error for guest mode
@@ -884,13 +912,13 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
         menuWindow.destroy()  # closes menu window
         matchWindow(username, guestMode, settings)  # opens match window
 
+    def shopPressed():
+        menuWindow.destroy()
+        shop(username, guestMode, settings)
+
     def signOutPressed():  # defines function for sign out button
         menuWindow.destroy()  # closes menu window
         home()  # returns to home screen
-
-    def shopPressed():
-        menuWindow.destroy()
-        shop(username)
 
     def settingsPressed(): # U PREESED SETING
         menuWindow.destroy() # BOOM
@@ -902,8 +930,11 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
     matchButton = customtkinter.CTkButton(menuWindow, text='Match', command=matchPressed)  # creates match button
     matchButton.pack(pady=10)  # displays match button with padding
 
-    shopButton = customtkinter.CTkButton(menuWindow, text='Shop', command=shopPressed)
-    shopButton.pack(pady=10)
+    shopButton = customtkinter.CTkButton(menuWindow, text='Shop', command=shopPressed, state='disabled', fg_color='gray')  # creates shop button (disabled bc didnt finish shop in time)
+    shopButton.pack(pady=10)  # displays shop button with padding
+
+    comingSoonLabel = customtkinter.CTkLabel(menuWindow, text='Coming Soon...', font=('Arial Bold', 15), text_color='gray') # (ts a lie im not finishing ts xd)
+    comingSoonLabel.place(relx=0.6, rely=0.35)
 
     settingsButton = customtkinter.CTkButton(menuWindow, text='Settings', command=settingsPressed)
     settingsButton.pack(pady=10)
@@ -938,7 +969,7 @@ def login(savedUsername, savedPassword):  # defines login window function
         loginWindow.destroy()  # closes login window
         home()  # returns to home screen
 
-    def onEnter():  # defines function for enter key press
+    def onEnter(event):  # defines function for enter key press
         loginPress()  # triggers login button press
 
     def loginPress():  # defines function for login button
@@ -1119,7 +1150,6 @@ def createAccountWindow():  # defines create account window function
 
 # MARK: - HOME
 
-
 def home():  # defines home window function
     homeWindow = customtkinter.CTk()  # creates new window
     homeWindow.geometry('850x600')  # sets window size
@@ -1156,9 +1186,6 @@ def home():  # defines home window function
 
     guestButton = customtkinter.CTkButton(homeWindow, text="Guest Mode", command=guestPressed)  # creates guest mode button
     guestButton.pack(pady=10)  # displays guest mode button with padding
-
-    exitButton = customtkinter.CTkButton(homeWindow, text='Exit', command=exit)
-    exitButton.pack(pady=10)
 
     homeWindow.mainloop()  # starts the window event loop
 

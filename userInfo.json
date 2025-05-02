@@ -1,136 +1,40 @@
 {
     "users": {
-        "RocketPringle": {
-            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
-            "joinDate": "02/03/2025",
-            "stats": {
-                "totalGames": 4,
-                "wins": 3,
-                "losses": 1,
-                "draws": 0,
-                "vsBot": {
-                    "easy": {
-                        "wins": 2,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "medium": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "hard": {
-                        "wins": 1,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "expert": {
-                        "wins": 0,
-                        "losses": 1,
-                        "draws": 0
-                    }
-                },
-                "vsPlayer": {
-                    "wins": 0,
-                    "losses": 0,
-                    "draws": 0
-                }
-            },
-            "achievements": [],
-            "achievementProgress": {
-                "consecutiveWins": 0,
-                "consecutiveLosses": 0,
-                "wins": 3,
-                "losses": 1,
-                "draws": 0,
-                "perfectScore": 0,
-                "sweepGame": 0,
-                "loseByOne": 0,
-                "gamesPlayed": 4
-            }
-        },
-        "e": {
-            "hashedPassword": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea",
-            "joinDate": "3215",
-            "stats": {
-                "totalGames": 0,
-                "wins": 0,
-                "losses": 0,
-                "draws": 0,
-                "vsBot": {
-                    "easy": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "medium": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "hard": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "expert": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    }
-                },
-                "vsPlayer": {
-                    "wins": 0,
-                    "losses": 0,
-                    "draws": 0
-                }
-            },
-            "achievements": [],
-            "achievementProgress": {
-                "consecutiveWins": 0,
-                "consecutiveLosses": 0,
-                "wins": 0,
-                "losses": 0,
-                "draws": 0,
-                "perfectScore": 0,
-                "sweepGame": 0,
-                "loseByOne": 0,
-                "gamesPlayed": 0
-            }
-        },
         "a": {
             "hashedPassword": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea",
             "joinDate": "0/0/0",
+            "coins": 1500,
             "stats": {
-                "totalGames": 465856865873,
-                "wins": 442,
-                "losses": 100000002,
+                "netWorth": 1500,
+                "totalGames": 465856865880,
+                "wins": 447,
+                "losses": 100000004,
                 "draws": -3,
                 "vsBot": {
-                    "easy": {
-                        "wins": 55,
+                    "Easy": {
+                        "wins": 59,
                         "losses": 121,
                         "draws": 6326237450
                     },
-                    "medium": {
+                    "Medium": {
                         "wins": 436,
                         "losses": 0,
                         "draws": 0
                     },
-                    "hard": {
+                    "Hard": {
                         "wins": 0,
                         "losses": 6999999,
                         "draws": 0
                     },
-                    "expert": {
+                    "Expert": {
                         "wins": 6322,
-                        "losses": 2,
+                        "losses": 3,
                         "draws": 135
                     }
                 },
                 "vsPlayer": {
                     "wins": 0,
-                    "losses": 9999999999999,
+                    "losses": 10000000000000,
                     "draws": 0
                 }
             },
@@ -151,6 +55,58 @@
                 "wins": 1,
                 "losses": 0,
                 "draws": 0,
+                "perfectScore": 0,
+                "sweepGame": 0,
+                "loseByOne": 0,
+                "gamesPlayed": 0
+            }
+        },
+        "aaa": {
+            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
+            "joinDate": "01/05/2025",
+            "coins": 0,
+            "stats": {
+                "netWorth": 0,
+                "totalGames": 1,
+                "wins": 0,
+                "losses": 1,
+                "draws": 0,
+                "vsBot": {
+                    "Easy": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Medium": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Hard": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Expert": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 1,
+                    "draws": 0
+                }
+            },
+            "achievements": [],
+            "achievementProgress": {
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "totalGames": 0,
+                "consecutiveWins": 0,
+                "consecutiveLosses": 0,
                 "perfectScore": 0,
                 "sweepGame": 0,
                 "loseByOne": 0,
