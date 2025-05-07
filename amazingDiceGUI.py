@@ -507,6 +507,7 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
 # MARK: - LOSE
 
         elif playerScore2 > playerScore1: #OTHER DUDE WON
+            ad.checkachievements('lose')
             infoLabel.configure(text=f"{'YOU LOSE' if botOrNot else displayUsername2} {'WON' if not botOrNot else ''}!", text_color=('red' if botOrNot else 'green'), font=('Arial Bold', 25)) # IF VS BOT CALLS U A LOSER ELSE JS SAYS WHO WON
             if not botOrNot: # if a player won display a trophy
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
