@@ -479,17 +479,23 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 #ewardLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
             else: # YOU WON VS PLAYER
                 #winReward = 500
-                infoLabel.configure(text=f'{displayUsername2} WON!', text_color='green', font=('Arial Bold', 25)) # TERLL U
+                infoLabel.configure(text=f'{displayUsername} WON!', text_color='green', font=('Arial Bold', 25)) # TERLL U
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
                 trophyLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
+                userData['users'][username2]['achievementProgress']['losses'] += 1
+                userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] += 1
+                userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
                 #rewardLabel = customtkinter.CTkLabel(gameWindow, text=f"Reward: {winReward}", font=('Arial Bold', 15))
                 #rewardLabel.place(relx=0.5, rely=0.8, anchor="center")  # put below info label # MOVE TJHE LAVBEL DOPWNNNNNNNNNNNNNNN
             if username != 'Guest':  # CHECK 4 TGUESS MODE SO NOT EDITING NON EXCISTENT STATS
-                ad.checkAchievement(username, 'wins')
-                ad.checkAchievement(username, 'consecutiveWins')
+                ad.checkAchievement(username, 'wins', 1)
+                ad.checkAchievement(username, 'consecutiveWins', 1)
                 userData = ad.loadUsers() # GET DATA
                 userData['users'][username]['stats']['totalGames'] += 1 # EDIT IT
                 userData['users'][username]['stats']['wins'] += 1 # MORE EDIT
+                userData['users'][username]['achievementProgress']['wins'] += 1
+                userData['users'][username]['achievementProgress']['ConsecutiveWins'] += 1
+                userData['users'][username]['achievementProgress']['ConsecutiveLosses'] = 0
                 if username2 == 'Bot': # EDIT WINS FOR BOTS 
                     userData['users'][username]['stats']['vsBot'][difficulty]['wins'] += 1 # ACUTALLY EDIT
                     #userData['users'][username]['stats']['netWorth'] += winReward
@@ -516,12 +522,18 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 sobLabel = customtkinter.CTkLabel(gameWindow, text="", image=sob) # create a trophy label
                 sobLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
             if username != 'Guest':  # all the stat stuff i dont want to tag it all you read the last bit 
+                userData['users'][username2]['achievementProgress']['losses'] += 1
+                userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] += 1
+                userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
                 userData = ad.loadUsers()
                 userData['users'][username]['stats']['totalGames'] += 1
                 userData['users'][username]['stats']['losses'] += 1
                 if username2 == 'Bot':
                     userData['users'][username]['stats']['vsBot'][difficulty]['losses'] += 1
                 else:
+                    userData['users'][username2]['achievementProgress']['losses'] += 1
+                    userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] += 1
+                    userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
                     userData['users'][username]['stats']['vsPlayer']['losses'] += 1 # HAHA U LOSE ILL SAVE IT YEEEEE
                     userData['users'][username2]['stats']['totalGames'] += 1
                     userData['users'][username2]['stats']['wins'] += 1 # OTHER WON SAVE IT TOO YAYAYAYA
@@ -537,6 +549,9 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 userData = ad.loadUsers() # BLAH BLAHG
                 userData['users'][username]['stats']['totalGames'] += 1
                 userData['users'][username]['stats']['draws'] += 1
+                userData['users'][username2]['achievementProgress']['draws'] += 1
+                userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] = 0
+                userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
                 if username2 == 'Bot':
                     userData['users'][username]['stats']['vsBot'][difficulty]['draws'] += 1
                 else:
