@@ -302,10 +302,16 @@ def getDifficultyInt(difficulty):  # defines function to convert difficulty int 
 
 def start():
     hasSavedLogin, username, hashedPassword = checkSavedLogin() # get username and hashed password from saved login or returns False, None, None if no saved login
+    print('uwu')
     if hasSavedLogin:  # if there is a saved login
+        print('uwu')
         if checkLogin(username, hashedPassword): # checks if saved login is valid, eg pasword changed but not saved 
+            print('uwu')
             adGUI.login(username, hashedPassword) # open login with saved login and settings
+        else:
+            adGUI.home
     else:
+        print(':c')
         adGUI.home() # open home if no saved login for default behaviour
 
 # MARK: - GET ACHIEVEMENTS
@@ -342,41 +348,34 @@ def checkAchievement(username, achievementType, value=1):
     userData = loadUsers()
     allAchievements = loadAchievements()
     
-    # Initialize achievements array if not exists
+    # make array if not there
     if 'achievements' not in userData['users'][username]:
         userData['users'][username]['achievements'] = []
     
-    # Initialize achievement progress if not exists
+    # same but progress
     if 'achievementProgress' not in userData['users'][username]:
         userData['users'][username]['achievementProgress'] = {}
     
-    # Get current achievements and progress
+    # get orofress
     userAchievements = userData['users'][username]['achievements']
     userProgress = userData['users'][username]['achievementProgress']
     
-    # Initialize progress for this type if not exists
+    # make it if not there
     if achievementType not in userProgress:
         userProgress[achievementType] = 0
     
-    # Update progress for the achievement type
-    if achievementType in ['consecutiveWins', 'consecutiveLosses']:
-        # These are special cases that need to be reset sometimes
-        if achievementType == 'consecutiveWins' and value > 0:
-            userProgress[achievementType] += 1
-            userProgress['consecutiveLosses'] = 0  # Reset lose streak
-        elif achievementType == 'consecutiveLosses' and value > 0:
-            userProgress[achievementType] += 1
-            userProgress['consecutiveWins'] = 0  # Reset win streak
-        else:
-            userProgress[achievementType] = 0  # Reset if not incrementing
-    else:
-        # For most achievement types, just add the value
-        userProgress[achievementType] += value
+    # update in the data 
+    userProgress[achievementType] += value
+
+    if achievementType == 'consecutiveWins':
+        userProgress['consecutiveLosses'] = 0
+    if achievementType == 'consecutiveLosses':
+        userProgress['consecutiveWins'] = 0
     
-    # Check all achievements against progress
+    # check stuff
     newAchievements = []
     for achievementId, achievement in allAchievements['achievements'].items():
-        # Skip already achieved ones
+        # Skip already achieved ones by looking through current ones ad comparing to new one (all items in achievements)
         alreadyAchieved = False
         for userAchievement in userAchievements:
             if userAchievement.get('id') == achievementId:
@@ -386,9 +385,9 @@ def checkAchievement(username, achievementType, value=1):
         if alreadyAchieved:
             continue
         
-        # Check if achievement is of the right type and requirement is met
+        # chek if acheivenment riht type
         if achievement['type'] == achievementType and userProgress.get(achievementType, 0) >= achievement['requirement']:
-            # Create new achievement object
+            # make new one if it done
             newAchievement = {
                 'id': achievementId,
                 'name': achievement['secretName'] if achievement['secret'] else achievement['name'],
@@ -401,11 +400,12 @@ def checkAchievement(username, achievementType, value=1):
             userAchievements.append(newAchievement)
             newAchievements.append(newAchievement)
     
-    # Save updated user data
-    if newAchievements:
-        userData['users'][username]['achievementProgress'] = userProgress
+    # save it the data progress
+    userData['users'][username]['achievementProgress'] = userProgress
+    if newAchievements: # if new thing got
+        # save it
         userData['users'][username]['achievements'] = userAchievements
-        saveUsers(userData)
+    saveUsers(userData)
     
     return newAchievements
 
@@ -417,6 +417,3 @@ if __name__ == "__main__":  # checks if file is being run directly (not from imp
 # MAKE SAVED LOGIN SHOW UP AS LIKE AUTOCOMPLETE ON LOGIN SCREEN
 
 # ONLINE:?????????????? NO I RAN OUT OF TIME I PROCRASTINATED THIS TILL THE LAST WEEK OOOPS
-
-# self reminder: 'a' account is special testing account with password 'e' to save time logging in during MANY tests
-# incase of password change during test, the hash of 'e' is , 3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea, to be directly added in userLoginInfo.json

@@ -493,9 +493,6 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 userData = ad.loadUsers() # GET DATA
                 userData['users'][username]['stats']['totalGames'] += 1 # EDIT IT
                 userData['users'][username]['stats']['wins'] += 1 # MORE EDIT
-                userData['users'][username]['achievementProgress']['wins'] += 1
-                userData['users'][username]['achievementProgress']['ConsecutiveWins'] += 1
-                userData['users'][username]['achievementProgress']['ConsecutiveLosses'] = 0
                 if username2 == 'Bot': # EDIT WINS FOR BOTS 
                     userData['users'][username]['stats']['vsBot'][difficulty]['wins'] += 1 # ACUTALLY EDIT
                     #userData['users'][username]['stats']['netWorth'] += winReward
@@ -513,7 +510,6 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
 # MARK: - LOSE
 
         elif playerScore2 > playerScore1: #OTHER DUDE WON
-            ad.checkachievements('lose')
             infoLabel.configure(text=f"{'YOU LOSE' if botOrNot else displayUsername2} {'WON' if not botOrNot else ''}!", text_color=('red' if botOrNot else 'green'), font=('Arial Bold', 25)) # IF VS BOT CALLS U A LOSER ELSE JS SAYS WHO WON
             if not botOrNot: # if a player won display a trophy
                 trophyLabel = customtkinter.CTkLabel(gameWindow, text="", image=trophy) # create a trophy label
@@ -522,18 +518,14 @@ def match(botOrNot, difficulty, username, username2, guestMode, settings): # bot
                 sobLabel = customtkinter.CTkLabel(gameWindow, text="", image=sob) # create a trophy label
                 sobLabel.place(relx=0.5, rely=0.6, anchor="center")  # put below info label
             if username != 'Guest':  # all the stat stuff i dont want to tag it all you read the last bit 
-                userData['users'][username2]['achievementProgress']['losses'] += 1
-                userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] += 1
-                userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
+                ad.checkAchievement(username, 'losses')
+                ad.checkAchievement(username, 'consecutiveLosses')
                 userData = ad.loadUsers()
                 userData['users'][username]['stats']['totalGames'] += 1
                 userData['users'][username]['stats']['losses'] += 1
                 if username2 == 'Bot':
                     userData['users'][username]['stats']['vsBot'][difficulty]['losses'] += 1
                 else:
-                    userData['users'][username2]['achievementProgress']['losses'] += 1
-                    userData['users'][username2]['achievementProgress']['ConsecutiveLosses'] += 1
-                    userData['users'][username2]['achievementProgress']['ConsecutiveWins'] = 0
                     userData['users'][username]['stats']['vsPlayer']['losses'] += 1 # HAHA U LOSE ILL SAVE IT YEEEEE
                     userData['users'][username2]['stats']['totalGames'] += 1
                     userData['users'][username2]['stats']['wins'] += 1 # OTHER WON SAVE IT TOO YAYAYAYA

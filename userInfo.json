@@ -6,13 +6,13 @@
             "coins": 1500,
             "stats": {
                 "netWorth": 1500,
-                "totalGames": 465856865880,
-                "wins": 447,
-                "losses": 100000004,
+                "totalGames": 465856865886,
+                "wins": 451,
+                "losses": 100000006,
                 "draws": -3,
                 "vsBot": {
                     "Easy": {
-                        "wins": 59,
+                        "wins": 63,
                         "losses": 121,
                         "draws": 6326237450
                     },
@@ -28,7 +28,7 @@
                     },
                     "Expert": {
                         "wins": 6322,
-                        "losses": 3,
+                        "losses": 5,
                         "draws": 135
                     }
                 },
@@ -47,13 +47,22 @@
                     "date": "21/04/2025",
                     "progress": 1,
                     "requirement": 1
+                },
+                {
+                    "id": "whoops",
+                    "name": "Whoops",
+                    "description": "Lose 1 game",
+                    "achieved": true,
+                    "date": "12/05/2025",
+                    "progress": 1,
+                    "requirement": 1
                 }
             ],
             "achievementProgress": {
                 "consecutiveWins": 0,
-                "consecutiveLosses": 0,
-                "wins": 1,
-                "losses": 0,
+                "consecutiveLosses": 1,
+                "wins": 3,
+                "losses": 1,
                 "draws": 0,
                 "perfectScore": 0,
                 "sweepGame": 0,
