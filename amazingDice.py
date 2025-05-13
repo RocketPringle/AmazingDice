@@ -110,6 +110,18 @@ def loadUsers():  # defines function to load user data from JSON file
     except:
         print("error loading users")
         return {"users": {}}
+    
+# MARK: - GET ITEMS
+
+def getItems():
+    try:
+        with open('itemList.json', 'r') as file:
+            return json.load(file)
+    except:
+        print("error getting items")
+        return {"items": {}}
+
+
 
 # MARK: - SAVE USERS
 

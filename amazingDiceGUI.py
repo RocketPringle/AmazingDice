@@ -19,6 +19,7 @@ def shop(username, guestMode, settings): # unfinished so mostly not tagged or ac
     titleLabel.pack(pady=20)
 
     coins = ad.getCoins(username)
+    itemList = ad.getItems()
 
     coinsLabel = customtkinter.CTkLabel(shopWindow, text=f"Coins: {coins}")
     coinsLabel.place(relx=0.95, rely=0.07, anchor='ne')  # positions account label in top right
@@ -29,15 +30,32 @@ def shop(username, guestMode, settings): # unfinished so mostly not tagged or ac
     infoLabel = customtkinter.CTkLabel(shopWindow, text='go away aaaaa') # info label my beloved
     infoLabel.pack(pady=10)
 
-    customtkinter.CTk
+    scrollFrame = customtkinter.CTkScrollableFrame(shopWindow)
+    scrollFrame.pack(pady=10)
 
     errorCounters = {
         
     }
     
+    for item in itemList["items"]:
+        itemFrame = customtkinter.CTkFrame(scrollFrame)
+        itemFrame.pack(pady=5)
+
+        itemNameLabel = customtkinter.CTkLabel(itemFrame, text=item["name"])
+        itemNameLabel.pack(pady=3)
+
+        itemCostLabel = customtkinter.CTkLabel(itemFrame, text=item["cost"])
+        itemCostLabel.pack(pady=3)
+
+        itemDescLabel = customtkinter.CTkLabel(itemFrame, text=item["desc"])
+        itemDescLabel.pack(pady=3)
+
+
     def backPressed():
         shopWindow.destroy()
         menu(guestMode, username, settings)
+
+    
 
     
 
@@ -938,7 +956,7 @@ def menu(guestMode, username, settings):  # defines menu window function that ta
     matchButton = customtkinter.CTkButton(menuWindow, text='Match', command=matchPressed)  # creates match button
     matchButton.pack(pady=10)  # displays match button with padding
 
-    shopButton = customtkinter.CTkButton(menuWindow, text='Shop', command=shopPressed, state='disabled', fg_color='gray')  # creates shop button (disabled bc didnt finish shop in time)
+    shopButton = customtkinter.CTkButton(menuWindow, text='Shop', command=shopPressed, fg_color='gray')  # creates shop button (disabled bc didnt finish shop in time)
     shopButton.pack(pady=10)  # displays shop button with padding
 
     comingSoonLabel = customtkinter.CTkLabel(menuWindow, text='Coming Soon...', font=('Arial Bold', 15), text_color='gray') # (ts a lie im not finishing ts xd)
