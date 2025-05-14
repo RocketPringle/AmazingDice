@@ -8,7 +8,7 @@ import time # FOR DELAY TO MAKE NOT BAD IG YEEEE
 import random # FOR LOADING PROGRESS BAR
 import keyring # for keyring integration
 
-# MARK - SHOP
+# MARK: - SHOP
 
 def shop(username, guestMode, settings): # unfinished so mostly not tagged or accesible and does absolutely nothing lmao
     shopWindow = customtkinter.CTk()
@@ -30,34 +30,36 @@ def shop(username, guestMode, settings): # unfinished so mostly not tagged or ac
     infoLabel = customtkinter.CTkLabel(shopWindow, text='go away aaaaa') # info label my beloved
     infoLabel.pack(pady=10)
 
-    scrollFrame = customtkinter.CTkScrollableFrame(shopWindow)
+    scrollFrame = customtkinter.CTkScrollableFrame(shopWindow, width=700, height=400)
     scrollFrame.pack(pady=10)
 
     errorCounters = {
         
     }
     
-    for item in itemList["items"]:
-        itemFrame = customtkinter.CTkFrame(scrollFrame)
-        itemFrame.pack(pady=5)
+    def buyPressed(item):
+        ad.buy(username, item)
 
-        itemNameLabel = customtkinter.CTkLabel(itemFrame, text=item["name"])
+    for item in itemList["items"]:
+        itemFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray85", "gray25"))
+        itemFrame.pack(pady=10, padx=10, side='left', ipadx=50, ipady=5)
+
+        itemNameLabel = customtkinter.CTkLabel(itemFrame, text=itemList['items'][item]["name"], font=('Arial Bold', 15))
         itemNameLabel.pack(pady=3)
 
-        itemCostLabel = customtkinter.CTkLabel(itemFrame, text=item["cost"])
+        itemCostLabel = customtkinter.CTkLabel(itemFrame, text=f"Cost: {itemList['items'][item]['cost']}")
         itemCostLabel.pack(pady=3)
 
-        itemDescLabel = customtkinter.CTkLabel(itemFrame, text=item["desc"])
+        itemDescLabel = customtkinter.CTkLabel(itemFrame, text=itemList['items'][item]["desc"])
         itemDescLabel.pack(pady=3)
+
+        buyButton = customtkinter.CTkButton(itemFrame, text='Buy', fg_color='green', command=buyPressed(item))
+        buyButton.pack(pady=3)
 
 
     def backPressed():
         shopWindow.destroy()
         menu(guestMode, username, settings)
-
-    
-
-    
 
     backButton = customtkinter.CTkButton(shopWindow, text='Back', command=backPressed)
     backButton.pack(pady=10)
@@ -836,7 +838,6 @@ def achievementsWindow(username, settings):
     achievementsLabel.pack(pady=10) # make label to shgow unlocked achievements
 
     for achievement in achievements:
-        # Create frame with darker background for visibility
         achievementFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray85", "gray25"))
         achievementFrame.pack(pady=5, padx=10, fill="x") # make frame for achievement
 

@@ -1,7 +1,14 @@
 {
     "items" : {
-        "name" : "Beef",
-        "cost" : 2000000,
-        "desc" : "fat"
+        "beef": {
+            "name" : "Bigger dice",
+            "cost" : 2500,
+            "desc" : "Gives your dice 2\nextra sides"
+        },
+        "aaaa" : {
+            "name" : "Even bigger dice",
+            "cost" : 5000,
+            "desc" : "Gives your dice\nanother 2 extra sides"
+        }
     }
 }
