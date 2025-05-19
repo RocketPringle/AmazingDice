@@ -121,7 +121,10 @@ def getItems():
         print("error getting items")
         return {"items": {}}
 
+# MARK: - BUY
 
+def buy(username, item, cost):
+    pass
 
 # MARK: - SAVE USERS
 

@@ -38,7 +38,7 @@ def shop(username, guestMode, settings): # unfinished so mostly not tagged or ac
     }
     
     def buyPressed(item):
-        ad.buy(username, item)
+        ad.buy(username, item, itemList['items'][item]['cost'])
 
     for item in itemList["items"]:
         itemFrame = customtkinter.CTkFrame(scrollFrame, fg_color=("gray85", "gray25"))

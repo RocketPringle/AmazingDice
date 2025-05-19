@@ -6,14 +6,14 @@
             "coins": 1500,
             "stats": {
                 "netWorth": 1500,
-                "totalGames": 465856865886,
+                "totalGames": 465856865887,
                 "wins": 451,
-                "losses": 100000006,
+                "losses": 100000007,
                 "draws": -3,
                 "vsBot": {
                     "Easy": {
                         "wins": 63,
-                        "losses": 121,
+                        "losses": 122,
                         "draws": 6326237450
                     },
                     "Medium": {
@@ -38,6 +38,9 @@
                     "draws": 0
                 }
             },
+            "inventory" : {
+                "id" : "beef"
+            },
             "achievements": [
                 {
                     "id": "diceDabbler",
@@ -60,62 +63,10 @@
             ],
             "achievementProgress": {
                 "consecutiveWins": 0,
-                "consecutiveLosses": 1,
+                "consecutiveLosses": 2,
                 "wins": 3,
-                "losses": 1,
+                "losses": 2,
                 "draws": 0,
-                "perfectScore": 0,
-                "sweepGame": 0,
-                "loseByOne": 0,
-                "gamesPlayed": 0
-            }
-        },
-        "aaa": {
-            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
-            "joinDate": "01/05/2025",
-            "coins": 0,
-            "stats": {
-                "netWorth": 0,
-                "totalGames": 1,
-                "wins": 0,
-                "losses": 1,
-                "draws": 0,
-                "vsBot": {
-                    "Easy": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "Medium": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "Hard": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    },
-                    "Expert": {
-                        "wins": 0,
-                        "losses": 0,
-                        "draws": 0
-                    }
-                },
-                "vsPlayer": {
-                    "wins": 0,
-                    "losses": 1,
-                    "draws": 0
-                }
-            },
-            "achievements": [],
-            "achievementProgress": {
-                "wins": 0,
-                "losses": 0,
-                "draws": 0,
-                "totalGames": 0,
-                "consecutiveWins": 0,
-                "consecutiveLosses": 0,
                 "perfectScore": 0,
                 "sweepGame": 0,
                 "loseByOne": 0,
