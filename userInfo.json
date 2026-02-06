@@ -1,0 +1,280 @@
+{
+    "users": {
+        "a": {
+            "hashedPassword": "3f79bb7b435b05321651daefd374cdc681dc06faa65e374e38337b88ca046dea",
+            "joinDate": "0/0/0",
+            "coins": 1500,
+            "stats": {
+                "netWorth": 1500,
+                "totalGames": 465856865887,
+                "wins": 451,
+                "losses": 100000007,
+                "draws": -3,
+                "vsBot": {
+                    "Easy": {
+                        "wins": 63,
+                        "losses": 122,
+                        "draws": 6326237450
+                    },
+                    "Medium": {
+                        "wins": 436,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Hard": {
+                        "wins": 0,
+                        "losses": 6999999,
+                        "draws": 0
+                    },
+                    "Expert": {
+                        "wins": 6322,
+                        "losses": 5,
+                        "draws": 135
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 10000000000000,
+                    "draws": 0
+                }
+            },
+            "inventory": [
+                "beef"
+            ],
+            "achievements": [
+                {
+                    "id": "diceDabbler",
+                    "name": "Dice Dabbler",
+                    "description": "Win your first game",
+                    "achieved": true,
+                    "date": "21/04/2025",
+                    "progress": 1,
+                    "requirement": 1
+                },
+                {
+                    "id": "whoops",
+                    "name": "Whoops",
+                    "description": "Lose 1 game",
+                    "achieved": true,
+                    "date": "12/05/2025",
+                    "progress": 1,
+                    "requirement": 1
+                }
+            ],
+            "achievementProgress": {
+                "consecutiveWins": 0,
+                "consecutiveLosses": 2,
+                "wins": 3,
+                "losses": 2,
+                "draws": 0,
+                "perfectScore": 0,
+                "sweepGame": 0,
+                "loseByOne": 0,
+                "gamesPlayed": 0
+            }
+        },
+        "me": {
+            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
+            "joinDate": "05/02/2026",
+            "coins": 99999999999999964499,
+            "stats": {
+                "netWorth": 2000,
+                "totalGames": 6,
+                "wins": 4,
+                "losses": 2,
+                "draws": 0,
+                "vsBot": {
+                    "Easy": {
+                        "wins": 3,
+                        "losses": 1,
+                        "draws": 0
+                    },
+                    "Medium": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Hard": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Expert": {
+                        "wins": 1,
+                        "losses": 1,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0
+                }
+            },
+            "inventory": [
+                "aaaa",
+                "beef",
+                "stonks",
+                "lorem ipsum",
+                "hello",
+                "aeasewasw",
+                "gamblingAddiction"
+            ],
+            "achievements": [
+                {
+                    "id": "diceDabbler",
+                    "name": "Dice Dabbler",
+                    "description": "Win your first game",
+                    "achieved": true,
+                    "date": "05/02/2026",
+                    "progress": 1,
+                    "requirement": 1
+                },
+                {
+                    "id": "whoops",
+                    "name": "Whoops",
+                    "description": "Lose 1 game",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 1,
+                    "requirement": 1
+                }
+            ],
+            "achievementProgress": {
+                "wins": 4,
+                "losses": 2,
+                "draws": 0,
+                "totalGames": 0,
+                "consecutiveWins": 0,
+                "consecutiveLosses": 1,
+                "perfectScore": 0,
+                "sweepGame": 0,
+                "loseByOne": 0,
+                "gamesPlayed": 0
+            }
+        },
+        "67": {
+            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
+            "joinDate": "06/02/2026",
+            "coins": 15000,
+            "stats": {
+                "netWorth": 67500,
+                "totalGames": 34,
+                "wins": 31,
+                "losses": 3,
+                "draws": 0,
+                "vsBot": {
+                    "Easy": {
+                        "wins": 9,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "Medium": {
+                        "wins": 1,
+                        "losses": 1,
+                        "draws": 0
+                    },
+                    "Hard": {
+                        "wins": 3,
+                        "losses": 1,
+                        "draws": 0
+                    },
+                    "Expert": {
+                        "wins": 18,
+                        "losses": 1,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0
+                }
+            },
+            "achievements": [
+                {
+                    "id": "diceDabbler",
+                    "name": "Dice Dabbler",
+                    "description": "Win your first game",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 1,
+                    "requirement": 1
+                },
+                {
+                    "id": "diceWhisperer",
+                    "name": "Dice Whisperer",
+                    "description": "Win a round with a perfect score (18)",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 1,
+                    "requirement": 1
+                },
+                {
+                    "id": "mildlyMenacing",
+                    "name": "Mildly Menacing",
+                    "description": "Win 5 games",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 5,
+                    "requirement": 5
+                },
+                {
+                    "id": "luckyStreak",
+                    "name": "Lucky Streak",
+                    "description": "Win 5 consecutive games",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 5,
+                    "requirement": 5
+                },
+                {
+                    "id": "whoops",
+                    "name": "Whoops",
+                    "description": "Lose 1 game",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 1,
+                    "requirement": 1
+                },
+                {
+                    "id": "doubleDigits",
+                    "name": "Double digits",
+                    "description": "Win 10 games",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 10,
+                    "requirement": 10
+                },
+                {
+                    "id": "adictionBegins",
+                    "name": "Adiction Begins",
+                    "description": "Win 20 games",
+                    "achieved": true,
+                    "date": "06/02/2026",
+                    "progress": 20,
+                    "requirement": 20
+                }
+            ],
+            "achievementProgress": {
+                "wins": 31,
+                "losses": 3,
+                "draws": 0,
+                "totalGames": 0,
+                "consecutiveWins": 1,
+                "consecutiveLosses": 0,
+                "perfectScore": 10,
+                "sweepGame": 0,
+                "loseByOne": 0,
+                "gamesPlayed": 0
+            },
+            "inventory": [
+                "beef",
+                "aaaa",
+                "stonks",
+                "gamblingAddiction",
+                "highStakes"
+            ]
+        }
+    }
+}

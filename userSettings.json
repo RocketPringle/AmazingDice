@@ -1,0 +1,32 @@
+{
+    "users": {
+        "RocketPringle": {
+            "fastRoll": true,
+            "theme": "dark"
+        },
+        "a": {
+            "theme": "dark",
+            "fastRoll": true
+        },
+        "e": {
+            "fastRoll": true,
+            "theme": "dark"
+        },
+        "Guest": {
+            "fastRoll": false,
+            "theme": "light"
+        },
+        "aaa": {
+            "theme": "dark",
+            "fastRoll": true
+        },
+        "me": {
+            "fastRoll": true,
+            "theme": "dark"
+        },
+        "67": {
+            "fastRoll": true,
+            "theme": "dark"
+        }
+    }
+}

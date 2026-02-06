@@ -1,0 +1,152 @@
+{
+    "users": {
+        "RocketPringle": {
+            "hashedPassword": "d6b02a68f3081f455b826185a24d94f8df127e188c93bad01ddcccce794a4e8b",
+            "joinDate": "02/03/2025",
+            "stats": {
+                "totalGames": 4,
+                "wins": 3,
+                "losses": 1,
+                "draws": 0,
+                "vsBot": {
+                    "easy": {
+                        "wins": 2,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "medium": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "hard": {
+                        "wins": 1,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "expert": {
+                        "wins": 0,
+                        "losses": 1,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0
+                }
+            }
+        },
+        "TestUser": {
+            "hashedPassword": "ffc121a2210958bf74e5a874668f3d978d24b6a8241496ccff3c0ea245e4f126",
+            "joinDate": "02/03/2025",
+            "stats": {
+                "totalGames": 0,
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "vsBot": {
+                    "easy": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "medium": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "hard": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "expert": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0
+                }
+            }
+        },
+        "ItsPaulTheBall_ElderMac_MarcusKAndGMac@gmail.com_macpup": {
+            "hashedPassword": "96146c5934c9178c213bda3219a9c1e7771841f46e034e34db53ef3ac2a07591",
+            "joinDate": "03/03/2025",
+            "stats": {
+                "totalGames": 999,
+                "wins": 999,
+                "losses": 0,
+                "draws": 0,
+                "vsBot": {
+                    "easy": {
+                        "wins": 99,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "medium": {
+                        "wins": 99,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "hard": {
+                        "wins": 999,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "expert": {
+                        "wins": 999999999,
+                        "losses": 0,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 2,
+                    "losses": 0,
+                    "draws": 0
+                }
+            }
+        },
+        "e": {
+            "hashedPassword": "b20644270dd2d2cd26a749d02210bb37508f2e906ba6a0ddee0903d97fb962e2",
+            "joinDate": "03/03/2025",
+            "stats": {
+                "totalGames": 0,
+                "wins": 0,
+                "losses": 0,
+                "draws": 0,
+                "vsBot": {
+                    "easy": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "medium": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "hard": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    },
+                    "expert": {
+                        "wins": 0,
+                        "losses": 0,
+                        "draws": 0
+                    }
+                },
+                "vsPlayer": {
+                    "wins": 0,
+                    "losses": 0,
+                    "draws": 0
+                }
+            }
+        }
+    }
+}

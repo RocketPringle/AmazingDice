@@ -1,0 +1,44 @@
+{
+    "items" : {
+        "beef": {
+            "name" : "Bigger dice",
+            "cost" : 2500,
+            "desc" : "Gives your dice 2\nextra sides"
+        },
+        "aaaa" : {
+            "name" : "Even bigger dice",
+            "cost" : 5000,
+            "desc" : "Gives your dice\nanother 2 extra sides"
+        },
+        "stonks" : {
+            "name" : "Stonks",
+            "cost" : 10000,
+            "desc" : "Gives you +1 score per roll"
+        },
+        "gamblingAddiction" : {
+            "name" : "Gambling Addiction",
+            "cost" : 15000,
+            "desc" : "Doubles bots score but doubles rewards."
+        },
+        "highStakes" : {
+            "name" : "High Stakes!",
+            "cost" : 20000,
+            "desc" : "Bots get +1 difficulty, but all rewards increased by 50%."
+        },
+        "luckyCharm" : {
+            "name" : "Lucky Charm",
+            "cost": 25000,
+            "desc" : "Bots get +1 difficulty, but adds +2 to your rolls."
+        },
+        "diceMaster" : {
+            "name" : "Dice Master!",
+            "cost" : 35000,
+            "desc" : "Adds 3 extra dice sides, bots get +2 difficulty."
+        },
+        "fortuneFavour" : {
+            "name" : "Fortune's favour.",
+            "cost" : 50000,
+            "desc" : "Multiplies rewards by 3 but bots get +2 difficult and their base roll is doubled."
+        }
+    }
+}
